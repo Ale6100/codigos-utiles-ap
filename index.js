@@ -1,4 +1,5 @@
 "use strict";
+// Link GitHub: https://github.com/Ale6100/Funciones-utiles-de-javascript.git
 
 
 //* ----- NÚMEROS -----
@@ -10,7 +11,7 @@ const probabilidadDeN = (n) => {
     return Math.random()*100 <= n
 }
 
-// Recibe dos números enteros y de vuelve un número entero al azar entre ellos
+// Recibe dos números enteros y devuelve un número entero al azar entre ellos
 const numeroEnteroAlAzar = (a, b) => {
     if (a !== parseInt(a) || b !== parseInt(b)) throw new Error('numeroEnteroAlAzar debe recibir dos números enteros')
     const random = Math.random() // Número al azar entre 0 y 1 (sin incluir el 1)
@@ -83,25 +84,25 @@ const factoresMasCercanos = (n) => {
 }
 
 // Recibe un número (como number o string) y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
-const redondear = (num) => {
-    if (num != parseFloat(num)) throw new Error('redondear debe recibir un número')
-    return +(Math.round(num + "e+2")  + "e-2")
+const redondear = (n) => {
+    if (n != parseFloat(n)) throw new Error('redondear debe recibir un número')
+    return +(Math.round(n + "e+2")  + "e-2")
 };
 
 // Recibe un número natural o cero (como number o string). Devuelve el factorial de dicho número.
-const factorial = (num) => {
-    if (num != parseInt(num) || num < 0) throw new Error('factorial debe recibir un número natural o cero')
+const factorial = (n) => {
+    if (n != parseInt(n) || n < 0) throw new Error('factorial debe recibir un número natural o cero')
     let r = 1
-    for (let i = 1; i<=num; i++) {
+    for (let i = 1; i<=n; i++) {
         r = i*r
     }
     return r
 }
 
-// Recibe un número (como number o string). Devuelve true si es par, pero falso si es impar
-const esPar = (num) => {
-    if (num != parseFloat(num)) throw new Error('esPar debe recibir un número')
-    return num%2 == 0
+// Recibe un número (como number o string). Devuelve true si es par, pero false si es impar
+const esPar = (n) => {
+    if (n != parseFloat(n)) throw new Error('esPar debe recibir un número')
+    return n%2 == 0
 }
 
 
@@ -117,7 +118,7 @@ const elementoAlAzar = (array) => {
     return array[indexAlAzar] // Gracias al indice al azar se devuelve un elemento al azar
 }
 
-// Recibe tres números. El tercero debe ser un número natural. Devuelve un array de números desde el origen hasta el final (sin incluir) solicitado, considerando un espaciado entre valores consecutivos
+// Recibe tres números. El tercero debe ser positivo. Devuelve un array de números desde el origen hasta el final (sin incluir) solicitado, considerando un espaciado entre valores consecutivos
 // Si no se pide el espaciado se sobreentiende que es de 1
 const arange = (origen, final, espaciado = 1) => {
     if (origen !== parseFloat(origen) || final !== parseFloat(final)) throw new Error('arange debe recibir números')
