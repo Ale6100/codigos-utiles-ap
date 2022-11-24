@@ -1,8 +1,9 @@
 {
-  "name": "codigos-utiles",
+  "name": "codigos-utiles-ap",
   "version": "1.0.0",
-  "description": "",
+  "description": "Módulo que contiene códigos para darte una mano en tus proyectos",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -10,5 +11,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ale6100/codigos-utiles-ap.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Ale6100/codigos-utiles-ap/issues"
+  },
+  "homepage": "https://github.com/Ale6100/codigos-utiles-ap#readme"
 }
