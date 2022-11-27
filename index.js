@@ -273,12 +273,13 @@ const colorRandom = () => {
  * @param {number} time Tiempo de espera en milisegundos 
  * @returns {promise<void>} Devuelve una promesa
  * @example <caption>Ejemplo de uso:</caption>
- * const funcionDeEjemplo = async () => {
-    // Tarea 1
-    // Tarea 2
-    await waitFor(3000) // Espera 3 segundos antes de ejecutar la tarea 3
-    // Tarea 3
-    }
+    import codigosap from "codigos-utiles-ap"
+    const funcionDeEjemplo = async () => {
+        // Tarea 1
+        // Tarea 2
+        await codigosap.waitFor(3000) // Espera 3 segundos antes de ejecutar la tarea 3
+        // Tarea 3
+        }
 
     funcionDeEjemplo()
  */
