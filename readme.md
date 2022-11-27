@@ -1,4 +1,4 @@
-# codigos-utiles-ap (versión 1.2.0) | Mi primer módulo de JavaScript subido a npm
+# codigos-utiles-ap (versión 1.1.0) | Mi primer módulo de JavaScript subido a npm
 
 Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm gran parte de las funciones de js que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
 
