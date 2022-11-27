@@ -1,4 +1,4 @@
-# codigos-utiles-ap | Mi primer módulo de JavaScript subido a npm
+# codigos-utiles-ap (versión 1.2.0) | Mi primer módulo de JavaScript subido a npm
 
 Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm gran parte de las funciones de js que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
 
@@ -41,20 +41,20 @@ Consejo: En tu editor de código favorito pasa el mouse sobre ellas para obtener
 * ```probabilidadDeN(n)```
 Recibe un número entre 0 y 100. Devuelve ```true``` el ```n%``` de las veces.
 
-* ```numeroEnteroAlAzar(a, b)```
-Recibe dos números enteros y devuelve un número entero al azar entre ellos.
+* ```numeroAlAzar(num1, num2)```
+Recibe dos números ```num1``` y ```num2```. Devuelve un número al azar entre ellos (no incluye al ```num2```)
 
-* ```numeroAlAzar(a, b)```
-Recibe dos números enteros y devuelve un número al azar entre ellos.
+* ```numeroEnteroAlAzar(num1, num2```
+Recibe dos números enteros y devuelve un número entero al azar entre ellos
 
-* ```esDivisor(n, N)```
-Recibe dos números. Si ```N``` es divisor de ```n```, devuelve ```true```
+* ```esDivisor(num1, num2)```
+Recibe dos números. Si ```num2``` es divisor de ```num1``` (es decir, si ```num1/num2``` tiene resto cero) entonces devuelve ```true```
 
-* ```divisores(n)```
+* ```divisores(num)```
 Recibe un número entero y devuelve un array con todos sus divisores.
 
 * ```factoresMasCercanos(n)```
-Recibe un número natural y devuelve un array con dos valores ```[a, b]``` tal que ```n=a*b```, donde ```a``` y ```b``` son los valores más cercanos posibles.
+Recibe un número natural ```n``` y devuelve un array con dos valores ```[a, b]``` tal que ```n=a*b```, donde ```a``` y ```b``` son los valores más cercanos posibles.
 
 * ```redondear(n)```
 Recibe un número y lo devuelve redondeado a dos decimales.
@@ -79,7 +79,7 @@ Recibe tres números. El tercero debe ser positivo. Devuelve un array de número
 * ```linspace(origen, final, densidad)```
 Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores pedidos.
 
-* ```mezclar(array)```
+* ```mezclarArray(array)```
 Recibe un array y lo devuelve mezclado.
 
 ### Funciones para obtener / modificar strings
@@ -91,6 +91,9 @@ Recibe un número ```n``` natural, devuelve un string aleatorio de longitud ```n
 
 * ```colorRandom()```
 Devuelve un color rgb al azar
+
+* ```waitFor(time)```
+Hace que tu código asincrónico espere el tiempo (en milisegundos) que le pases como parámetro
 
 Estoy abierto a sugerencias!
 
