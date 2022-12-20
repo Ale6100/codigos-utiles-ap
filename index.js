@@ -12,7 +12,7 @@
  * @returns {boolean}
  */
 const probabilidadDeN = (n) => {
-    if (n != parseFloat(n) || n < 0 || n > 100) throw new Error('probabilidadDeN debe recibir un número entre 0 y 100')
+    if (n != parseFloat(n) || n < 0 || n > 100) throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${n}`)
     return Math.random()*100 <= n
 }
 
@@ -22,8 +22,8 @@ const probabilidadDeN = (n) => {
  * @param {number} num2 Segundo número
  * @returns {number}
  */
- const numeroAlAzar = (num1, num2) => {
-    if (num1 !== parseFloat(num1) || num2 !== parseFloat(num2)) throw new Error('numeroAlAzar debe recibir dos números')
+const numeroAlAzar = (num1, num2) => {
+    if (num1 !== parseFloat(num1) || num2 !== parseFloat(num2)) throw new Error(`numeroAlAzar debe recibir dos números. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
     const random = Math.random()
     const randomAmpliado = random*(Math.abs(num2-num1)) //  Número al azar entre 0 y |num2-num1| (este último sin incluir)
     const numeroMasChico = num1 < num2 ? num1 : num2
@@ -37,7 +37,7 @@ const probabilidadDeN = (n) => {
  * @returns {number} Retorna un numero entero al azar entre ```num1``` y ```num2```
  */
 const numeroEnteroAlAzar = (num1, num2) => {
-    if (num1 !== parseInt(num1) || num2 !== parseInt(num2)) throw new Error('numeroEnteroAlAzar debe recibir dos números enteros')
+    if (num1 !== parseInt(num1) || num2 !== parseInt(num2)) throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
     const numeroBuscado = Math.round(numeroAlAzar(num1, num2))
     return numeroBuscado === -0 ? 0 : numeroBuscado // Tuve que hacer esta validación para que a veces no redondee como -0 en vez de 0
 }
@@ -155,8 +155,24 @@ const elementoAlAzar = (array) => {
     if (typeof array == "number" || typeof array == "string") throw new Error('elementoAlAzar debe recibir un array')
     const random = Math.random() // Número al azar entre 0 y 1 (sin incluir el 1)
     const randomAmpliado = random*array.length // Número al azar entre 0 y array.length (sin incluir el array.length)
-    const indexAlAzar = parseInt(randomAmpliado) // Número entero al azar entre 0 y array.length-1. Observar que es una posición i-ésima al azar del array
+    const indexAlAzar = Math.floor(randomAmpliado) // Número entero al azar entre 0 y array.length-1. Observar que es una posición i-ésima al azar del array
     return array[indexAlAzar] // Gracias al indice al azar se devuelve un elemento al azar
+}
+
+/**
+ * Recibe un array y lo devuelve mezclado
+ * @param {array} array
+ * @returns {array}
+ */
+const mezclarArray = (array) => {
+    if (typeof array == "number" || typeof array == "string") throw new Error('mezclar debe recibir un array')
+    const arrayMezclado = []
+    while (array.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
+        const indiceAzar = Math.floor(Math.random()*array.length)
+        const elementoRandom = array.splice(indiceAzar, 1)[0]
+        arrayMezclado.push(elementoRandom)
+    }
+    return arrayMezclado
 }
 
 /**
@@ -168,14 +184,16 @@ const elementoAlAzar = (array) => {
 const obtenerNElementos = (array, n) => {
     if (typeof array == "number" || typeof array == "string") throw new Error('El primer parámetro de obtenerNElementos debe ser un array')
     if (n != parseInt(n) || n <= 0 || array.length < n) throw new Error('El segundo parámetro de obtenerNElementos debe ser un número natural mayor a la longitud del array en el primer parámetro')
-    const elementos = []
-    while (elementos.length < n) {
-        const elementoRandom = elementoAlAzar(array)
-        if (!elementos.includes(elementoRandom)) {
-            elementos.push(elementoRandom)
+    const indicesUsados = []
+    const nuevoArray = []
+    while (nuevoArray.length < n) { // Agrega n elementos al azar en el nuevo array, siempre y cuando no hayan sido agregados anteriormente
+        const indiceAzar = Math.floor(Math.random()*array.length)
+        if (indicesUsados.includes(indiceAzar) === false) {
+            nuevoArray.push(array[indiceAzar])
+            indicesUsados.push(indiceAzar)
         }
     }
-    return elementos
+    return nuevoArray
 }
 
 /**
@@ -214,26 +232,6 @@ const linspace = (origen, final, densidad) => {
     return array
 }
 
-/**
- * Recibe un array y lo devuelve mezclado
- * @param {array} array
- * @returns {array}
- */
-const mezclarArray = (array) => {
-    if (typeof array == "number" || typeof array == "string") throw new Error('mezclar debe recibir un array')
-    const arrayMezclado = []
-    array.forEach(() => {
-        while (true) {
-            const elemetoAlAzar_ = elementoAlAzar(array)
-            if (arrayMezclado.includes(elemetoAlAzar_) === false) { // Si el elemento no está en el nuevo array entonces lo agrega, se deja de repetir el while, y se ejecuta de nuevo el for
-                arrayMezclado.push(elemetoAlAzar_)
-                break
-            }
-        }
-    })
-    return arrayMezclado
-}
-
 
 //* ----- STRINGS -----
 
@@ -262,9 +260,9 @@ const stringAleatorio = (n) => {
  * @returns {string}
  */
 const colorRandom = () => {
-    const red = parseInt(Math.random()*256)
-    const green = parseInt(Math.random()*256)
-    const blue = parseInt(Math.random()*256)
+    const red = Math.floor(Math.random()*256)
+    const green = Math.floor(Math.random()*256)
+    const blue = Math.floor(Math.random()*256)
     return `rgb(${red}, ${green}, ${blue})`
 }
 
@@ -284,8 +282,8 @@ const colorRandom = () => {
     funcionDeEjemplo()
  */
 const waitFor = (time) => {
-    if (typeof time !== "number" || time < 0) throw new Error("waitFor debe recibir un número positivo")
-    return new Promise((res, rej) => setTimeout(() => {res()}, time))
+    if (typeof time !== "number" || time < 0) throw new Error("waitFor debe recibir un número positivo (en milisegundos)")
+    return new Promise((resolve, reject) => setTimeout(resolve, time))
 }
 
 export default {
@@ -299,10 +297,10 @@ export default {
     factorial,
     esPar,
     elementoAlAzar,
+    mezclarArray,
     obtenerNElementos,
     arange,
     linspace,
-    mezclarArray,
     stringAleatorio,
     colorRandom,
     waitFor
