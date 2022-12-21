@@ -1,6 +1,6 @@
 {
   "name": "codigos-utiles-ap",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Módulo que contiene códigos para darte una mano en tus proyectos",
   "main": "index.js",
   "type": "module",
