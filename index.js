@@ -1,5 +1,5 @@
 "use strict";
-// Link GitHub: https://github.com/Ale6100/Funciones-utiles-de-javascript.git
+// Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 
 
@@ -11,9 +11,11 @@
  * @param {number|string} n Número entre `0` y `100` que representa la probabilidad de que la función devuelva `true`
  * @returns {boolean} Valor booleano que representa si se ha cumplido la probabilidad dada por `n`
  * @example
- * probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
  */
-const probabilidadDeN = (n) => {
+export const probabilidadDeN = (n) => {
     if (n != parseFloat(n) || n < 0 || n > 100) throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${n}`)
     return Math.random()*100 <= n
 }
@@ -25,7 +27,7 @@ const probabilidadDeN = (n) => {
  * @throws {error} Si alguno de los parámetros no es un número
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
-const numeroAlAzar = (num1, num2) => {
+export const numeroAlAzar = (num1, num2) => {
     if (num1 !== parseFloat(num1) || num2 !== parseFloat(num2)) throw new Error(`numeroAlAzar debe recibir dos números. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
     const random = Math.random()
     const randomAmpliado = random*(Math.abs(num2-num1)) //  Número al azar entre 0 y |num2-num1| (este último sin incluir)
@@ -40,7 +42,7 @@ const numeroAlAzar = (num1, num2) => {
  * @throws {error} Si alguno de los parámetros no es un entero
  * @returns {number} Retorna un numero entero al azar entre `num1` y `num2`
  */
-const numeroEnteroAlAzar = (num1, num2) => {
+export const numeroEnteroAlAzar = (num1, num2) => {
     if (num1 !== parseInt(num1) || num2 !== parseInt(num2)) throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
     const numeroBuscado = Math.round(numeroAlAzar(num1, num2))
     return numeroBuscado === -0 ? 0 : numeroBuscado // Evitamos que el resultado pueda ser -0 en lugar de 0
@@ -53,13 +55,15 @@ const numeroEnteroAlAzar = (num1, num2) => {
  * @throws {TypeError} - Si alguno de los argumentos no es un número o una cadena de texto que represente a un número
  * @returns {boolean} Devuelve `true` si `num2` es divisor de `num1`, y `false` en caso contrario
  * @example
- * esDivisor(6, 3) // retorna true
- * esDivisor(7, 3) // retorna false
- * esDivisor('6', 3) // retorna true
- * esDivisor(6, '3') // retorna true
- * esDivisor("6", "3") // retorna true
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.esDivisor(6, 3) // retorna true
+ * codigosap.esDivisor(7, 3) // retorna false
+ * codigosap.esDivisor('6', 3) // retorna true
+ * codigosap.esDivisor(6, '3') // retorna true
+ * codigosap.esDivisor("6", "3") // retorna true
  */
-const esDivisor = (num1, num2) => {
+export const esDivisor = (num1, num2) => {
     if (typeof num1 !== 'number' && typeof num1 !== 'string') throw new TypeError(`\`num1\` debe ser un número o una cadena de texto que represente a un número, pero se ha recibido ${JSON.stringify(num1)} (${typeof num1})`);
     if (typeof num2 !== 'number' && typeof num2 !== 'string') throw new TypeError(`\`num2\` debe ser un número o una cadena de texto que represente a un número, pero se ha recibido ${JSON.stringify(num2)} (${typeof num2})`)
     return num1 % num2 === 0
@@ -71,10 +75,12 @@ const esDivisor = (num1, num2) => {
  * @throws {error} Si `num` no es un número entero
  * @returns {Array<number>} Un array con los divisores del número `num`
  * @example
- * divisores(12) // returns [1, 2, 3, 4, 6, 12]
- * divisores(-12) // returns [-1, -2, -3, -4, -6, -12]
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.divisores(12) // returns [1, 2, 3, 4, 6, 12]
+ * codigosap.divisores(-12) // returns [-1, -2, -3, -4, -6, -12]
  */
-const divisores = (num) => {
+export const divisores = (num) => {
     if (num != parseInt(num)) throw new Error('divisores debe recibir un número entero')
     if (num == 0) return Infinity
     const signoDen = num/Math.abs(num)
@@ -90,15 +96,17 @@ const divisores = (num) => {
 }
 
 /**
- * Recibe un número natural `n` y devuelve un array con dos valores `[a, b]` tal que `n=a*b`, donde `a` y `b` son los valores más cercanos posibles.
+ * Recibe un número natural `n` y devuelve un array con dos valores `[a, b]` tal que `n=a*b`, donde `a` y `b` son los valores más cercanos posibles
  * @param {number|string} n Número natural al que se le quieren determinar los factores más cercanos
  * @returns {Array<number>} Un array con dos elementos `[a, b]`, donde `a` y `b` son los factores de `n` más cercanos posibles 
  * @throws {Error} Si `n` no es un número natural
  * @example
- * factoresMasCercanos(12) // retorna [4, 3]
- * factoresMasCercanos(16) // retorna [4, 4]
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.factoresMasCercanos(12) // retorna [4, 3]
+ * codigosap.factoresMasCercanos(16) // retorna [4, 4]
  */
-const factoresMasCercanos = (n) => {
+export const factoresMasCercanos = (n) => {
     if (n != parseInt(n) || n <= 0) throw new Error('factoresMasCercanos debe recibir un número natural')
     let divisoresDeN = divisores(n)
     let res = divisoresDeN 
@@ -135,25 +143,29 @@ const factoresMasCercanos = (n) => {
  * @returns {number} Retorna el número redondeado a dos decimales
  * @throws {Error} - Si `n` no es un número
  * @example
- * redondear(12.3456) // retorna 12.35
- * redondear(16.998) // retorna 17
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.redondear(12.3456) // retorna 12.35
+ * codigosap.redondear(16.998) // retorna 17
  */
-const redondear = (n) => {
+export const redondear = (n) => {
     if (n != parseFloat(n)) throw new Error('redondear debe recibir un número')
     return +(Math.round(n + "e+2") + "e-2")
 };
 
 /**
- * Recibe un número natural o cero. Devuelve el factorial de dicho número.
+ * Recibe un número natural o cero. Devuelve el factorial de dicho número
  * @param {number|string} n Número al que se le quiere calcular el factorial
  * @returns {number} Retorna el factorial de `n`
  * @throws {Error} Si `n` no es un número natural o es menor que cero
  * @example
- * factorial(1) // retorna 1
- * factorial(3) // retorna 6
- * factorial(4) // retorna 24
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.factorial(1) // retorna 1
+ * codigosap.factorial(3) // retorna 6
+ * codigosap.factorial(4) // retorna 24
  */
-const factorial = (n) => {
+export const factorial = (n) => {
     if (n != parseInt(n) || n < 0) throw new Error('factorial debe recibir un número natural o cero')
     let r = 1
     for (let i = 1; i<=n; i++) {
@@ -165,13 +177,15 @@ const factorial = (n) => {
 /**
  * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
  * @param {number|string} n Número que se quiere evaluar
- * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar.
+ * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
  * @throws {Error} Si `n` no es un número o una cadena de texto que represente a un número
  * @example
- * esPar(2) // retorna true
- * esPar(3) // retorna false
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.esPar(2) // retorna true
+ * codigosap.esPar(3) // retorna false
  */
-const esPar = (n) => {
+export const esPar = (n) => {
     if (n != parseFloat(n)) throw new Error('esPar debe recibir un número')
     return n%2 === 0
 }
@@ -186,10 +200,12 @@ const esPar = (n) => {
  * @returns {any} Retorna un elemento al azar del array
  * @throws {TypeError} Si el argumento no es un array
  * @example
- * elementoAlAzar([1, 'b', 3, 4]) // Puede retornar cualquiera de los elementos del array
- * elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.elementoAlAzar([1, 'b', 3, 4]) // Puede retornar cualquiera de los elementos del array
+ * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
-const elementoAlAzar = (array) => {
+export const elementoAlAzar = (array) => {
     if (!Array.isArray(array)) throw new TypeError('elementoAlAzar debe recibir un array')
     const random = Math.random() // Número al azar entre 0 y 1 (sin incluir el 1)
     const randomAmpliado = random*array.length // Número al azar entre 0 y array.length (sin incluir el array.length)
@@ -203,10 +219,12 @@ const elementoAlAzar = (array) => {
  * @returns {array} Retorna el array mezclado
  * @throws {TypeError} Si el argumento no es un array
  * @example
- * mezclarArray([1, 'b', 3, 4]) // Puede retornar cualquier combinación de los elementos del array
- * mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.mezclarArray([1, 'b', 3, 4]) // Puede retornar cualquier combinación de los elementos del array
+ * codigosap.mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
  */
-const mezclarArray = (array) => {
+export const mezclarArray = (array) => {
     if (!Array.isArray(array)) throw new TypeError('mezclar debe recibir un array')
     const arrayMezclado = []
     while (array.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
@@ -224,11 +242,13 @@ const mezclarArray = (array) => {
  * @returns {array} Retorna un array con `n` elementos seleccionados al azar del array de entrada
  * @throws {Error} Si el primer argumento no es un array o el segundo argumento no es un número natural y menor o igual a la longitud del array
  * @example
- * obtenerNElementos([1, 'b', 3, 4], 2) // Puede retornar cualquier combinación de dos elementos del array
- * obtenerNElementos(['a', 'b', 5], 1) // Puede retornar cualquier elemento del array
- * obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.obtenerNElementos([1, 'b', 3, 4], 2) // Puede retornar cualquier combinación de dos elementos del array
+ * codigosap.obtenerNElementos(['a', 'b', 5], 1) // Puede retornar cualquier elemento del array
+ * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
  */
-const obtenerNElementos = (array, n) => {
+export const obtenerNElementos = (array, n) => {
     if (!Array.isArray(array)) throw new TypeError('El primer parámetro de obtenerNElementos debe ser un array')
     if (n != parseInt(n) || n <= 0 || array.length < n) throw new Error('El segundo parámetro de obtenerNElementos debe ser un número natural mayor a la longitud del array del primer parámetro')
     const indicesUsados = []
@@ -251,10 +271,12 @@ const obtenerNElementos = (array, n) => {
  * @returns {Array<number>} Retorna un array de números equiespaciados con las condiciones especificadas en los parámetros
  * @throws {Error} Si `origen` o `final` no son números o si `espaciado` no es un número positivo.
  * @example
- * arange(0, 10, 2) // devuelve [0, 2, 4, 6, 8]
- * arange(1, 10) // devuelve [1, 2, 3, 4, 5, 6, 7, 8, 9]
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.arange(0, 10, 2) // devuelve [0, 2, 4, 6, 8]
+ * codigosap.arange(1, 10) // devuelve [1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
-const arange = (origen, final, espaciado = 1) => {
+export const arange = (origen, final, espaciado = 1) => {
     if (origen !== parseFloat(origen) || final !== parseFloat(final)) throw new Error('arange debe recibir números')
     if (espaciado !== parseFloat(espaciado) || espaciado <= 0) throw new Error('El tercer parámetro de arange debe ser un número mayor a cero')
     const array = []
@@ -272,10 +294,12 @@ const arange = (origen, final, espaciado = 1) => {
  * @returns {Array<number>} Retorna un array de números equiespaciados con las condiciones especificadas en los parámetros
  * @throws {Error} Si alguno de los tres argumentos no es un número, si `origen` es igual a `final`, o si `densidad` es negativa.
  * @example
- * linspace(0, 10, 5) // devuelve [0, 2.5, 5, 7.5, 10]
- * linspace(-1, 1, 3) // devuelve [-1, 0, 1]
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.linspace(0, 10, 5) // devuelve [0, 2.5, 5, 7.5, 10]
+ * codigosap.linspace(-1, 1, 3) // devuelve [-1, 0, 1]
  */
-const linspace = (origen, final, densidad) => {
+export const linspace = (origen, final, densidad) => {
     if (origen !== parseFloat(origen) || final !== parseFloat(final) || densidad !== parseFloat(densidad)) throw new Error('linspace debe recibir números')
     if (origen == final) throw new Error('Los primeros dos parámetros de linspace deben ser números distintos')
     if (densidad < 0) throw new Error('El tercer parámetro de linspace debe ser un número positivo')
@@ -297,7 +321,7 @@ const linspace = (origen, final, densidad) => {
  * @returns {string} Retorna un string aleatorio de longitud `n`
  * @throws {Error} Si `n` no es un número natural.
  */
-const stringAleatorio = (n) => {
+export const stringAleatorio = (n) => {
     if (n != parseInt(n) || n <= 0) throw new Error('stringAleatorio debe recibir número natural')
     const simbolos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789¡!¿?@#$%&()+-=*,.;:_"
     let stringRandom = ""
@@ -308,6 +332,31 @@ const stringAleatorio = (n) => {
 }
 
 
+//* ----- OBJETOS -----
+
+
+/**
+ * Recibe un array cuyos elementos son arrays dobles con claves y valores, y retorna un objeto cuyas propiedades son las claves y sus valores son los valores correspondientes de los arrays dobles del array de entrada (ver ejemplo)
+ * @param {Array} array Array de entrada cuyos elementos deben ser arrays dobles con claves y valores
+ * @returns {Object} Retorna un objeto cuyas propiedades son las claves y sus valores son los valores correspondientes de los arrays dobles del array de entrada
+ * @throws {TypeError} Si el argumento no es un array o no cumplen con la estructura de arrays dobles con claves y valores
+ * @throws {Error} Si las claves del objeto a construir son objetos
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * const array = [["clave1", "valor1"], ["clave2", "valor2"], ["clave3", "valor3"]]
+ * codigosap.arrayAObjeto(array) // Retorna { clave1: 'valor1', clave2: 'valor2', clave3: 'valor3' }
+ */
+export const arrayAObjeto = (array) => {
+    if (!Array.isArray(array)) throw new TypeError('arrayAObjeto debe recibir un array')
+    if (!array.every(element => element.length === 2 )) throw new TypeError("arrayAObjeto debe ser un array cuyos elementos son arrays dobles con elementos clave/valor del objeto a construir")
+    if (array.some(element => typeof element[0] === "object")) throw new Error("En arrayAObjeto, las claves del objeto a construir no deben ser objetos")
+    const objeto = {}
+    array.forEach(([key, value]) => objeto[key] = value) // Construyo el objeto usando la sintaxis de destructuring
+    return objeto
+}
+
+
 //* ----- OTROS -----
 
 
@@ -315,7 +364,7 @@ const stringAleatorio = (n) => {
  * Retorna un color RGB al azar
  * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
  */
-const colorRandom = () => {
+export const colorRandom = () => {
     const red = Math.floor(Math.random()*256)
     const green = Math.floor(Math.random()*256)
     const blue = Math.floor(Math.random()*256)
@@ -339,7 +388,7 @@ const colorRandom = () => {
 
     funcionDeEjemplo()
  */
-const waitFor = (time) => {
+export const waitFor = (time) => {
     if (typeof time !== "number" || time < 0) throw new Error("waitFor debe recibir un número positivo (en milisegundos)")
     return new Promise((resolve, reject) => setTimeout(resolve, time))
 }
@@ -360,6 +409,7 @@ export default {
     arange,
     linspace,
     stringAleatorio,
+    arrayAObjeto,
     colorRandom,
     waitFor
 }
