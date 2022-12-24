@@ -2,9 +2,7 @@
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 
-
 //* ----- NÚMEROS -----
-
 
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
@@ -44,7 +42,7 @@ export const numeroAlAzar = (num1, num2) => {
  */
 export const numeroEnteroAlAzar = (num1, num2) => {
     if (num1 !== parseInt(num1) || num2 !== parseInt(num2)) throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
-    const numeroBuscado = Math.round(numeroAlAzar(num1, num2))
+    const numeroBuscado = Math.round(numeroAlAzar(num1-0.5, num2+0.5))
     return numeroBuscado === -0 ? 0 : numeroBuscado // Evitamos que el resultado pueda ser -0 en lugar de 0
 }
 
@@ -349,8 +347,8 @@ export const stringAleatorio = (n) => {
  */
 export const arrayAObjeto = (array) => {
     if (!Array.isArray(array)) throw new TypeError('arrayAObjeto debe recibir un array')
-    if (!array.every(element => element.length === 2 )) throw new TypeError("arrayAObjeto debe ser un array cuyos elementos son arrays dobles con elementos clave/valor del objeto a construir")
-    if (array.some(element => typeof element[0] === "object")) throw new Error("En arrayAObjeto, las claves del objeto a construir no deben ser objetos")
+    if (!array.every(element => element.length === 2 )) throw new TypeError("arrayAObjeto debe recibir un array cuyos elementos son arrays dobles con elementos clave/valor del objeto a construir")
+    if (array.some(element => typeof element[0] === "object")) throw new Error("En arrayAObjeto, las claves del objeto a construir (primer elemento de cada array doble) no deben ser objetos")
     const objeto = {}
     array.forEach(([key, value]) => objeto[key] = value) // Construyo el objeto usando la sintaxis de destructuring
     return objeto
