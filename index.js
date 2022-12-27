@@ -1,4 +1,5 @@
-"use strict";
+// @ts-check
+
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 
@@ -6,7 +7,7 @@
 
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
- * @param {number|string} n Número entre `0` y `100` que representa la probabilidad de que la función devuelva `true`
+ * @param {number} n Número entre `0` y `100` que representa la probabilidad de que la función devuelva `true`
  * @returns {boolean} Valor booleano que representa si se ha cumplido la probabilidad dada por `n`
  * @example
  * import codigosap from "codigos-utiles-ap"
@@ -14,7 +15,7 @@
  * codigosap.probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
  */
 export const probabilidadDeN = (n) => {
-    if (n != parseFloat(n) || n < 0 || n > 100) throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${n}`)
+    if (typeof n !== "number" || n < 0 || n > 100) throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     return Math.random()*100 <= n
 }
 
@@ -26,9 +27,8 @@ export const probabilidadDeN = (n) => {
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
 export const numeroAlAzar = (num1, num2) => {
-    if (num1 !== parseFloat(num1) || num2 !== parseFloat(num2)) throw new Error(`numeroAlAzar debe recibir dos números. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
-    const random = Math.random()
-    const randomAmpliado = random*(Math.abs(num2-num1)) //  Número al azar entre 0 y |num2-num1| (este último sin incluir)
+    if (typeof num1 !== 'number' || typeof num2 !== 'number') throw new Error(`numeroAlAzar debe recibir dos números. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`)
+    const randomAmpliado = Math.random()*(Math.abs(num2-num1)) //  Número al azar entre 0 y |num2-num1| (este último sin incluir)
     const numeroMasChico = num1 < num2 ? num1 : num2
     return numeroMasChico + randomAmpliado // Desplazo el rango para que inicie donde inicia el número más pequeño
 }
@@ -41,35 +41,31 @@ export const numeroAlAzar = (num1, num2) => {
  * @returns {number} Retorna un numero entero al azar entre `num1` y `num2`
  */
 export const numeroEnteroAlAzar = (num1, num2) => {
-    if (num1 !== parseInt(num1) || num2 !== parseInt(num2)) throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se han recibido ${num1} (${typeof num1}) y ${num2} (${typeof num2})`)
+    if (!Number.isInteger(num1) || !Number.isInteger(num2)) throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`)
     const numeroBuscado = Math.round(numeroAlAzar(num1-0.5, num2+0.5))
     return numeroBuscado === -0 ? 0 : numeroBuscado // Evitamos que el resultado pueda ser -0 en lugar de 0
 }
 
 /**
  * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero) 
- * @param {number|string} num1 Primer número
- * @param {number|string} num2 Segundo número
- * @throws {TypeError} - Si alguno de los argumentos no es un número o una cadena de texto que represente a un número
+ * @param {number} num1 Primer número
+ * @param {number} num2 Segundo número
+ * @throws {TypeError} - Si alguno de los argumentos no es un número
  * @returns {boolean} Devuelve `true` si `num2` es divisor de `num1`, y `false` en caso contrario
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
  * codigosap.esDivisor(6, 3) // retorna true
  * codigosap.esDivisor(7, 3) // retorna false
- * codigosap.esDivisor('6', 3) // retorna true
- * codigosap.esDivisor(6, '3') // retorna true
- * codigosap.esDivisor("6", "3") // retorna true
  */
 export const esDivisor = (num1, num2) => {
-    if (typeof num1 !== 'number' && typeof num1 !== 'string') throw new TypeError(`\`num1\` debe ser un número o una cadena de texto que represente a un número, pero se ha recibido ${JSON.stringify(num1)} (${typeof num1})`);
-    if (typeof num2 !== 'number' && typeof num2 !== 'string') throw new TypeError(`\`num2\` debe ser un número o una cadena de texto que represente a un número, pero se ha recibido ${JSON.stringify(num2)} (${typeof num2})`)
+    if (typeof num1 !== "number" || typeof num2 !== "number") throw new TypeError(`esDivisor debe recibir números. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`)
     return num1 % num2 === 0
 }
 
 /**
  * Recibe un número entero y devuelve un array con todos sus divisores
- * @param {number|string} num Número al que se le quieren determinar los divisores
+ * @param {number} num Número al que se le quieren determinar los divisores
  * @throws {error} Si `num` no es un número entero
  * @returns {Array<number>} Un array con los divisores del número `num`
  * @example
@@ -79,8 +75,8 @@ export const esDivisor = (num1, num2) => {
  * codigosap.divisores(-12) // returns [-1, -2, -3, -4, -6, -12]
  */
 export const divisores = (num) => {
-    if (num != parseInt(num)) throw new Error('divisores debe recibir un número entero')
-    if (num == 0) return Infinity
+    if (!Number.isInteger(num)) throw new Error(`divisores debe recibir un número entero. Se ha recibido ${JSON.stringify(num)} (${typeof num})`)
+    if (num == 0) return [Infinity, Infinity]
     const signoDen = num/Math.abs(num)
     num = Math.abs(num)
     let divisoresDeN = []
@@ -95,7 +91,7 @@ export const divisores = (num) => {
 
 /**
  * Recibe un número natural `n` y devuelve un array con dos valores `[a, b]` tal que `n=a*b`, donde `a` y `b` son los valores más cercanos posibles
- * @param {number|string} n Número natural al que se le quieren determinar los factores más cercanos
+ * @param {number} n Número natural al que se le quieren determinar los factores más cercanos
  * @returns {Array<number>} Un array con dos elementos `[a, b]`, donde `a` y `b` son los factores de `n` más cercanos posibles 
  * @throws {Error} Si `n` no es un número natural
  * @example
@@ -105,7 +101,7 @@ export const divisores = (num) => {
  * codigosap.factoresMasCercanos(16) // retorna [4, 4]
  */
 export const factoresMasCercanos = (n) => {
-    if (n != parseInt(n) || n <= 0) throw new Error('factoresMasCercanos debe recibir un número natural')
+    if (!Number.isInteger(n) || n <= 0) throw new Error(`factoresMasCercanos debe recibir un número natural. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     let divisoresDeN = divisores(n)
     let res = divisoresDeN 
         
@@ -137,7 +133,7 @@ export const factoresMasCercanos = (n) => {
 
 /**
  * Recibe un número y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
- * @param {number|string} n Número que se quiere redondear
+ * @param {number} n Número que se quiere redondear
  * @returns {number} Retorna el número redondeado a dos decimales
  * @throws {Error} - Si `n` no es un número
  * @example
@@ -147,13 +143,13 @@ export const factoresMasCercanos = (n) => {
  * codigosap.redondear(16.998) // retorna 17
  */
 export const redondear = (n) => {
-    if (n != parseFloat(n)) throw new Error('redondear debe recibir un número')
-    return +(Math.round(n + "e+2") + "e-2")
+    if (typeof n !== "number") throw new Error(`redondear debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
+    return +(Math.round(parseFloat(n.toString() + "e+2")) + "e-2")
 };
 
 /**
  * Recibe un número natural o cero. Devuelve el factorial de dicho número
- * @param {number|string} n Número al que se le quiere calcular el factorial
+ * @param {number} n Número al que se le quiere calcular el factorial
  * @returns {number} Retorna el factorial de `n`
  * @throws {Error} Si `n` no es un número natural o es menor que cero
  * @example
@@ -164,7 +160,7 @@ export const redondear = (n) => {
  * codigosap.factorial(4) // retorna 24
  */
 export const factorial = (n) => {
-    if (n != parseInt(n) || n < 0) throw new Error('factorial debe recibir un número natural o cero')
+    if (!Number.isInteger(n) || n < 0) throw new Error(`factorial debe recibir un número natural o cero. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     let r = 1
     for (let i = 1; i<=n; i++) {
         r = i*r
@@ -174,9 +170,9 @@ export const factorial = (n) => {
 
 /**
  * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
- * @param {number|string} n Número que se quiere evaluar
+ * @param {number} n Número que se quiere evaluar
  * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
- * @throws {Error} Si `n` no es un número o una cadena de texto que represente a un número
+ * @throws {Error} Si `n` no es un número
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
@@ -184,7 +180,7 @@ export const factorial = (n) => {
  * codigosap.esPar(3) // retorna false
  */
 export const esPar = (n) => {
-    if (n != parseFloat(n)) throw new Error('esPar debe recibir un número')
+    if (typeof n !== "number") throw new Error(`esPar debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     return n%2 === 0
 }
 
@@ -204,7 +200,7 @@ export const esPar = (n) => {
  * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
 export const elementoAlAzar = (array) => {
-    if (!Array.isArray(array)) throw new TypeError('elementoAlAzar debe recibir un array')
+    if (!Array.isArray(array)) throw new TypeError(`elementoAlAzar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     const random = Math.random() // Número al azar entre 0 y 1 (sin incluir el 1)
     const randomAmpliado = random*array.length // Número al azar entre 0 y array.length (sin incluir el array.length)
     const indexAlAzar = Math.floor(randomAmpliado) // Número entero al azar entre 0 y array.length-1. Observar que es una posición i-ésima al azar del array
@@ -223,7 +219,7 @@ export const elementoAlAzar = (array) => {
  * codigosap.mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
  */
 export const mezclarArray = (array) => {
-    if (!Array.isArray(array)) throw new TypeError('mezclar debe recibir un array')
+    if (!Array.isArray(array)) throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     const arrayMezclado = []
     while (array.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
         const indiceAzar = Math.floor(Math.random()*array.length)
@@ -236,7 +232,7 @@ export const mezclarArray = (array) => {
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
  * @param {Array} array Array del cual se quieren seleccionar los elementos
- * @param {number|string} n Cantidad de elementos del array que se quieren seleccionar
+ * @param {number} n Cantidad de elementos del array que se quieren seleccionar
  * @returns {array} Retorna un array con `n` elementos seleccionados al azar del array de entrada
  * @throws {Error} Si el primer argumento no es un array o el segundo argumento no es un número natural y menor o igual a la longitud del array
  * @example
@@ -247,13 +243,13 @@ export const mezclarArray = (array) => {
  * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
  */
 export const obtenerNElementos = (array, n) => {
-    if (!Array.isArray(array)) throw new TypeError('El primer parámetro de obtenerNElementos debe ser un array')
-    if (n != parseInt(n) || n <= 0 || array.length < n) throw new Error('El segundo parámetro de obtenerNElementos debe ser un número natural mayor a la longitud del array del primer parámetro')
+    if (!Array.isArray(array)) throw new TypeError(`El primer parámetro de obtenerNElementos debe ser un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de obtenerNElementos debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     const indicesUsados = []
     const nuevoArray = []
     while (nuevoArray.length < n) { // Agrega n elementos al azar en el nuevo array, siempre y cuando no hayan sido agregados anteriormente
         const indiceAzar = Math.floor(Math.random()*array.length)
-        if (indicesUsados.includes(indiceAzar) === false) {
+        if (!indicesUsados.includes(indiceAzar)) {
             nuevoArray.push(array[indiceAzar])
             indicesUsados.push(indiceAzar)
         }
@@ -271,12 +267,12 @@ export const obtenerNElementos = (array, n) => {
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
- * codigosap.arange(0, 10, 2) // devuelve [0, 2, 4, 6, 8]
- * codigosap.arange(1, 10) // devuelve [1, 2, 3, 4, 5, 6, 7, 8, 9]
+ * codigosap.arange(0, 10, 2) // Retorna [0, 2, 4, 6, 8]
+ * codigosap.arange(1, 10) // Retorna [1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
 export const arange = (origen, final, espaciado = 1) => {
-    if (origen !== parseFloat(origen) || final !== parseFloat(final)) throw new Error('arange debe recibir números')
-    if (espaciado !== parseFloat(espaciado) || espaciado <= 0) throw new Error('El tercer parámetro de arange debe ser un número mayor a cero')
+    if (typeof origen !== 'number' || typeof final !== 'number') throw new Error(`Los primeros dos parámetros de arange deben ser númericos. Se ha recibido ${JSON.stringify(origen)} (${typeof origen}) y ${JSON.stringify(final)} (${typeof final})`)
+    if (typeof espaciado !== 'number' || espaciado <= 0) throw new Error(`El tercer parámetro de arange debe ser un número mayor a cero. Se ha recibido ${JSON.stringify(espaciado)} (${typeof espaciado})`)
     const array = []
     for (let i=origen; i<final; i+=espaciado) {
         array.push(i)
@@ -294,13 +290,13 @@ export const arange = (origen, final, espaciado = 1) => {
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
- * codigosap.linspace(0, 10, 5) // devuelve [0, 2.5, 5, 7.5, 10]
- * codigosap.linspace(-1, 1, 3) // devuelve [-1, 0, 1]
+ * codigosap.linspace(0, 10, 5) // Retorna [0, 2.5, 5, 7.5, 10]
+ * codigosap.linspace(-1, 1, 3) // Retorna [-1, 0, 1]
  */
 export const linspace = (origen, final, densidad) => {
-    if (origen !== parseFloat(origen) || final !== parseFloat(final) || densidad !== parseFloat(densidad)) throw new Error('linspace debe recibir números')
-    if (origen == final) throw new Error('Los primeros dos parámetros de linspace deben ser números distintos')
-    if (densidad < 0) throw new Error('El tercer parámetro de linspace debe ser un número positivo')
+    if (typeof origen !== 'number' || typeof final !== 'number' || typeof densidad !== 'number') throw new Error(`linspace debe recibir números. Se ha recibido ${JSON.stringify(origen)} (${typeof origen}), ${JSON.stringify(final)} (${typeof final}) y ${JSON.stringify(densidad)} (${typeof densidad})`)
+    if (origen == final) throw new Error(`Los primeros dos parámetros de linspace deben ser números distintos. Ambos tienen el siguiente valor: ${JSON.stringify(origen)} (${typeof origen})`)
+    if (densidad < 0) throw new Error(`El tercer parámetro de linspace debe ser un número positivo. Se ha recibido ${JSON.stringify(densidad)} (${typeof densidad})`)
     const espaciado = (final-origen)/(densidad-1)
     const array = []
     for (let i=origen; i<=final; i+=espaciado) {
@@ -309,22 +305,49 @@ export const linspace = (origen, final, densidad) => {
     return array
 }
 
+/**
+ * Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos
+ * @param {Array<number>} array Array de números
+ * @param {number} n Número natural. Cantidad de posiciones a seleccionar del array
+ * @returns {Array<number>} Retorna un array de números enteros con las posiciones de los `n` elementos más grandes del array original
+ * @throws {TypeError} Si el primer argumento no es un array de números
+ * @throws {Error} Si el segundo argumento no es un número natural menor o igual a la longitud del array
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.ubicacionNElementosMasGrandes([5, 3, 8, 1, 9, 6], 3) // Retorna [2, 4, 5]
+ * codigosap.ubicacionNElementosMasGrandes([1, 3, 4, 0, 3], 2) // Retorna [1, 2, 4]
+ */
+export const ubicacionNElementosMasGrandes = (array, n) => {
+    if (!Array.isArray(array) || !array.every(elemento => typeof elemento === "number")) throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
+    const arrayCopia = []
+    array.forEach(elemento => arrayCopia.push(elemento))
+    const valoresMasGrandes = array.sort((a, b) => b-a).slice(0, n)
+
+    const indices = [] // Ubicacion de los n elementos más grandes del array
+    arrayCopia.forEach((elemento, index) => {
+        if (valoresMasGrandes.includes(elemento)) indices.push(index)
+    })
+    return indices
+}
+
 
 //* ----- STRINGS -----
 
 
 /**
  * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
- * @param {number|string} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
+ * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
  * @returns {string} Retorna un string aleatorio de longitud `n`
  * @throws {Error} Si `n` no es un número natural.
  */
 export const stringAleatorio = (n) => {
-    if (n != parseInt(n) || n <= 0) throw new Error('stringAleatorio debe recibir número natural')
+    if (!Number.isInteger(n) || n <= 0) throw new Error(`stringAleatorio debe recibir número natural. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     const simbolos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789¡!¿?@#$%&()+-=*,.;:_"
     let stringRandom = ""
     for (let i=1; i<=n; i++) {
-        stringRandom += simbolos[parseInt(simbolos.length*Math.random())]
+        stringRandom += simbolos[Math.floor(simbolos.length*Math.random())]
     }
     return stringRandom
 }
@@ -346,9 +369,9 @@ export const stringAleatorio = (n) => {
  * codigosap.arrayAObjeto(array) // Retorna { clave1: 'valor1', clave2: 'valor2', clave3: 'valor3' }
  */
 export const arrayAObjeto = (array) => {
-    if (!Array.isArray(array)) throw new TypeError('arrayAObjeto debe recibir un array')
-    if (!array.every(element => element.length === 2 )) throw new TypeError("arrayAObjeto debe recibir un array cuyos elementos son arrays dobles con elementos clave/valor del objeto a construir")
-    if (array.some(element => typeof element[0] === "object")) throw new Error("En arrayAObjeto, las claves del objeto a construir (primer elemento de cada array doble) no deben ser objetos")
+    if (!Array.isArray(array)) throw new TypeError(`arrayAObjeto debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (!array.every(element => element.length === 2 )) throw new TypeError(`arrayAObjeto debe recibir un array cuyos elementos son arrays dobles con elementos clave/valor del objeto a construir. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (array.some(element => typeof element[0] === "object")) throw new Error(`Parámetro incorrecto colocado en arrayAObjeto: Las claves del objeto a construir (primer elemento de cada array doble) no deben ser objetos. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     const objeto = {}
     array.forEach(([key, value]) => objeto[key] = value) // Construyo el objeto usando la sintaxis de destructuring
     return objeto
@@ -387,7 +410,7 @@ export const colorRandom = () => {
     funcionDeEjemplo()
  */
 export const waitFor = (time) => {
-    if (typeof time !== "number" || time < 0) throw new Error("waitFor debe recibir un número positivo (en milisegundos)")
+    if (typeof time !== "number" || time < 0) throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`)
     return new Promise((resolve, reject) => setTimeout(resolve, time))
 }
 
@@ -406,6 +429,7 @@ export default {
     obtenerNElementos,
     arange,
     linspace,
+    ubicacionNElementosMasGrandes,
     stringAleatorio,
     arrayAObjeto,
     colorRandom,

@@ -86,6 +86,9 @@ Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un
 * `linspace(origen, final, densidad)`
 Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores especificados.
 
+* `ubicacionNElementosMasGrandes(array, n)` 
+Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos.
+
 ### Funciones para obtener / modificar strings
 
 * `stringAleatorio(n)`
