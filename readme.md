@@ -8,7 +8,7 @@ Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codi
 
 Necesitas tener previamente descargado e instalado [NodeJs](https://nodejs.org/).
 
-**Por ahora sólo puede usarse en proyectos backend**
+**Por ahora sólo puede usarse en proyectos JavaScript backend**
 
 ### Instalación 🔧
 
@@ -94,10 +94,13 @@ Recibe un array de números y un número natural `n`. Devuelve un array de núme
 * `stringAleatorio(n)`
 Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`.
 
+* `superTrim(string)`
+Recibe un string, devuelve el mismo string sin espacios en blanco en ambos extremos y reemplaza todos los espacios consecutivos por uno solo.
+
 ### Funciones para obtener / modificar objetos
 
-* `arrayAObjeto(array)`
-Recibe un array cuyos elementos son arrays dobles con claves y valores, y retorna un objeto cuyas propiedades son las claves y sus valores son los valores correspondientes de los arrays dobles del array de entrada.
+* `crearObjeto(claves, valores)`
+Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B.
 
 ### Extras
 
