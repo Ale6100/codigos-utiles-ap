@@ -4,11 +4,11 @@ Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm gran
 
 Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
+**NUEVO: Ahora compatible con Typescript! Próximamente: CDN para usar en proyectos frontend vanilla**
+
 ### Pre-requisitos 📋
 
 Necesitas tener previamente descargado e instalado [NodeJs](https://nodejs.org/).
-
-**Por ahora sólo puede usarse en proyectos JavaScript backend**
 
 ### Instalación 🔧
 
