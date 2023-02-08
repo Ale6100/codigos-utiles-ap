@@ -1,38 +1,44 @@
-# codigos-utiles-ap | Mi primer módulo de JavaScript subido a npm
+# codigos-utiles-ap | Mi primer módulo de Typescript subido a npm
 
-Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm gran parte de las funciones de js que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
+Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algunas de las funciones de JavaScript y Typescriot que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
 
 Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
-**NUEVO: Ahora compatible con Typescript! Próximamente: CDN para usar en proyectos frontend vanilla**
+### Instalación y uso 🔧
 
-### Pre-requisitos 📋
+* En la terminal, escribe
 
-Necesitas tener previamente descargado e instalado [NodeJs](https://nodejs.org/).
+```
+npm install codigos-utiles-ap
+```
 
-### Instalación 🔧
+* Importa el módulo con el nombre que más te guste antes de utilizarlo, por ejemplo:
 
-En la terminal, escribe `npm install codigos-utiles-ap`
-
-## Uso 📦
-
-Aconsejo utilizar el `import` para importar el módulo. Para que esto funcione recuerda tener colocado `"type": "module"` en el package.json.
-
-Luego importa el módulo con el nombre que más te guste antes de utilizarlo, por ejemplo:
-
-`import codigosap from "codigos-utiles-ap"`
+```
+import codigosap from "codigos-utiles-ap"
+```
 
 Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección **Funciones**.
 
 Por ejemplo, si queremos obtener 3 elementos al azar del array `[-50, 0, -3, "40", "josé", true, ["Kilo", 3]]`, simplemente escribimos:
 
-`const elementos = codigosap.obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3]], 3)`
+```
+const elementos = codigosap.obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3]], 3)
+```
 
 Alternativamente puedes importar las funciones usando desestructuración:
 
-`import { obtenerNElementos } from "codigos-utiles-ap"`
+```
+import { obtenerNElementos } from "codigos-utiles-ap"
 
-`const elementos = obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3]], 3)`
+const elementos = obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3]], 3)
+```
+
+* Si lo deseas, puedes instalar el módulo adhiriendo el siguiente link a tu archivo HTML:
+
+```
+<script src="https://cdn.jsdelivr.net/npm/codigos-utiles-ap/dist/index_CDN.min.js"></script>
+```
 
 ## Funciones 🤓
 
@@ -115,8 +121,9 @@ Estoy abierto a sugerencias!
 ## Construido con 🛠️
 
 * JavaScript
+* [Typescript](https://www.typescriptlang.org/)
 * [NodeJs](https://nodejs.org/)
 
-## Autores ✒️
+## Autor ✒️
 
 * **Alejandro Portaluppi** - [LinkedIn](https://www.linkedin.com/in/alejandro-portaluppi/)
