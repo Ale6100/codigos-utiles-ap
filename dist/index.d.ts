@@ -197,6 +197,37 @@ export declare const stringAleatorio: (n: number) => string;
  */
 export declare const superTrim: (string: string) => string;
 /**
+ * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneMayuscula("hola mundo") // Retorna false
+ */
+export declare const tieneMayuscula: (string: string) => boolean;
+/**
+ * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+ */
+export declare const tieneCaracterEspecial: (string: string) => boolean;
+/**
+ * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+ * @throws {TypeError} Si el argumento no es un string
+ */
+export declare const tieneNumero: (string: string) => boolean;
+/**
  * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
  * @param {any[]} valores Array cuyos elementos serán los valores del objeto
@@ -427,6 +458,37 @@ declare const _default: {
      * codigosap.superTrim("     Juan     Pérez de  los      Quinotos ") // Retorna "Juan Pérez de los Quinotos"
      */
     superTrim: (string: string) => string;
+    /**
+     * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+     * @throws {TypeError} Si el argumento no es un string
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+     * codigosap.tieneMayuscula("hola mundo") // Retorna false
+     */
+    tieneMayuscula: (string: string) => boolean;
+    /**
+     * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+     * @throws {TypeError} Si el argumento no es un string
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+     * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+     */
+    tieneCaracterEspecial: (string: string) => boolean;
+    /**
+     * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+     * @throws {TypeError} Si el argumento no es un string
+     */
+    tieneNumero: (string: string) => boolean;
     /**
      * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
      * @param {any[]} claves Array cuyos elementos serán las claves del objeto

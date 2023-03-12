@@ -3,7 +3,7 @@
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 
-//* ----- NÚMEROS -----
+//! ----- NÚMEROS -----
 
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
@@ -185,7 +185,7 @@ export const esPar = (n: number): boolean => {
 }
 
 
-//* ----- ARRAYS -----
+//! ----- ARRAYS -----
 
 
 /**
@@ -333,7 +333,7 @@ export const ubicacionNElementosMasGrandes = (array: number[], n: number): numbe
 }
 
 
-//* ----- STRINGS -----
+//! ----- STRINGS -----
 
 
 /**
@@ -366,14 +366,56 @@ export const superTrim = (string: string): string => {
     if (typeof string !== "string") throw new TypeError(`superTrim debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
     string = string.trim()
     while (string.includes("  ")) {
-        // @ts-ignore // Ignoro el siguiente error ya que el ts-check no está actualizado y no detecta que el replaceAll sí existe. Muy pronto mejoraré esto
         string = string.replaceAll("  ", " ")
     }
     return string
 }
 
+/**
+ * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneMayuscula("hola mundo") // Retorna false
+ */
+export const tieneMayuscula = (string: string): boolean => {
+    if (typeof string !== "string") throw new TypeError(`tieneMayuscula debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
+    return /\p{Lu}/u.test(string);
+}
 
-//* ----- OBJETOS -----
+/**
+ * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+ */
+export const tieneCaracterEspecial = (string: string): boolean => {
+    if (typeof string !== "string") throw new TypeError(`tieneCaracterEspecial debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
+    return /[\p{P}\p{S}\p{M}\p{C}\p{Cf}]/gu.test(string)
+}
+
+/**
+ * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+ * @throws {TypeError} Si el argumento no es un string 
+ */
+export const tieneNumero = (string: string): boolean => {
+    if (typeof string !== "string") throw new TypeError(`tieneNumero debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
+    return /\d+/u.test(string)
+}
+
+
+//! ----- OBJETOS -----
 
 
 /**
@@ -402,7 +444,7 @@ export const crearObjeto = (claves: any[], valores: any[]): Object => {
     return obj
 }
 
-//* ----- OTROS -----
+//! ----- OTROS -----
 
 
 /**
@@ -438,7 +480,7 @@ export const waitFor = (time: number): Promise<void> => {
     return new Promise((resolve, reject) => setTimeout(resolve, time))
 }
 
-export default {
+export default { // Coloco otra vez las documentaciones, ya que quiero que aparezcan también cuando se importa por defecto
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
  * @param {number} n Número entre `0` y `100` que representa la probabilidad de que la función devuelva `true`
@@ -449,6 +491,7 @@ export default {
  * codigosap.probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
  */
     probabilidadDeN,
+
 /**
  * Recibe dos números `num1` y `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`)
  * @param {number} num1 Primer número
@@ -457,6 +500,7 @@ export default {
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
     numeroAlAzar,
+
 /**
  * Recibe dos números enteros y devuelve un número entero al azar entre ellos
  * @param {number} num1 Primer número entero 
@@ -465,6 +509,7 @@ export default {
  * @returns {number} Retorna un numero entero al azar entre `num1` y `num2`
  */
     numeroEnteroAlAzar,
+
 /**
  * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero) 
  * @param {number} num1 Primer número
@@ -478,6 +523,7 @@ export default {
  * codigosap.esDivisor(7, 3) // retorna false
  */
     esDivisor,
+
 /**
  * Recibe un número entero y devuelve un array con todos sus divisores
  * @param {number} num Número al que se le quieren determinar los divisores
@@ -490,6 +536,7 @@ export default {
  * codigosap.divisores(-12) // returns [-1, -2, -3, -4, -6, -12]
  */
     divisores,
+
 /**
  * Recibe un número natural `n` y devuelve un array con dos valores `[a, b]` tal que `n=a*b`, donde `a` y `b` son los valores más cercanos posibles
  * @param {number} n Número natural al que se le quieren determinar los factores más cercanos
@@ -502,6 +549,7 @@ export default {
  * codigosap.factoresMasCercanos(16) // retorna [4, 4]
  */
     factoresMasCercanos,
+
 /**
  * Recibe un número y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
  * @param {number} n Número que se quiere redondear
@@ -514,6 +562,7 @@ export default {
  * codigosap.redondear(16.998) // retorna 17
  */
     redondear,
+    
 /**
  * Recibe un número natural o cero. Devuelve el factorial de dicho número
  * @param {number} n Número al que se le quiere calcular el factorial
@@ -527,6 +576,7 @@ export default {
  * codigosap.factorial(4) // retorna 24
  */
     factorial,
+
 /**
  * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
  * @param {number} n Número que se quiere evaluar
@@ -539,6 +589,7 @@ export default {
  * codigosap.esPar(3) // retorna false
  */
     esPar,
+
 /**
  * Recibe un array y retorna un elemento al azar
  * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
@@ -551,6 +602,7 @@ export default {
  * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
     elementoAlAzar,
+
 /**
  * Recibe un array y lo devuelve mezclado
  * @param {any[]} array Array que se pretende mezclar
@@ -563,6 +615,7 @@ export default {
  * codigosap.mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
  */
     mezclarArray,
+
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
  * @param {any[]} array Array del cual se quieren seleccionar los elementos
@@ -577,6 +630,7 @@ export default {
  * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
  */
     obtenerNElementos,
+
 /**
  * Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final (sin incluir) solicitado, considerando el espaciado especificado
  * @param {number} origen Origen del array a retornar
@@ -591,6 +645,7 @@ export default {
  * codigosap.arange(1, 10) // Retorna [1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
     arange,
+
 /**
  * Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores especificados
  * @param {number} origen Origen del array a retornar
@@ -605,6 +660,7 @@ export default {
  * codigosap.linspace(-1, 1, 3) // Retorna [-1, 0, 1]
  */
     linspace,
+
 /**
  * Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos
  * @param {number[]} array Array de números
@@ -619,6 +675,7 @@ export default {
  * codigosap.ubicacionNElementosMasGrandes([1, 3, 4, 0, 3], 2) // Retorna [1, 2, 4]
  */
     ubicacionNElementosMasGrandes,
+
 /**
  * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
  * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
@@ -637,6 +694,41 @@ export default {
  * codigosap.superTrim("     Juan     Pérez de  los      Quinotos ") // Retorna "Juan Pérez de los Quinotos"
  */
     superTrim,
+
+/**
+ * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneMayuscula("hola mundo") // Retorna false
+ */
+    tieneMayuscula,
+
+/**
+ * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ * 
+ * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+ */
+    tieneCaracterEspecial,
+
+/**
+ * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+ * @throws {TypeError} Si el argumento no es un string 
+ */
+    tieneNumero,
+
 /**
  * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
@@ -646,11 +738,13 @@ export default {
  * @returns Retorna un objeto literal con las características mencionadas
  */
     crearObjeto,
+
 /**
  * Retorna un color RGB al azar
  * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
  */
     colorRandom,
+
 /**
  * Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución
  * @param {number} time Tiempo de espera en milisegundos 

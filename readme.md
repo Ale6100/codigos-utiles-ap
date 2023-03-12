@@ -1,6 +1,6 @@
-# codigos-utiles-ap | Mi primer módulo de Typescript subido a npm
+# codigos-utiles-ap | Mi primer módulo de Javascript subido a npm
 
-Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algunas de las funciones de JavaScript y Typescriot que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
+Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algunas de las funciones de JavaScript y Typescript que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
 
 Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
@@ -12,7 +12,7 @@ Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codi
 npm install codigos-utiles-ap
 ```
 
-* Importa el módulo con el nombre que más te guste antes de utilizarlo, por ejemplo:
+Importa el módulo con el nombre que más te guste antes de utilizarlo, por ejemplo:
 
 ```
 import codigosap from "codigos-utiles-ap"
@@ -39,6 +39,8 @@ const elementos = obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3
 ```
 <script src="https://cdn.jsdelivr.net/npm/codigos-utiles-ap/dist/index_CDN.min.js"></script>
 ```
+
+No recomiendo esta última opción ya que no tiene sugerencias de autocompletado
 
 ## Funciones 🤓
 
@@ -102,6 +104,15 @@ Recibe un número `n` natural, devuelve un string con carácteres aleatorios de 
 
 * `superTrim(string)`
 Recibe un string, devuelve el mismo string sin espacios en blanco en ambos extremos y reemplaza todos los espacios consecutivos por uno solo.
+
+* `tieneMayuscula(string)`
+Recibe un string. Devuelve `true` si contiene alguna mayúscula, sin importar el idioma de escritura de la letra.
+
+* `tieneCaracterEspecial(string)`
+Recibe un string. Devuelve `true` si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco).
+
+* `tieneNumero(string)`
+Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario.
 
 ### Funciones para obtener / modificar objetos
 

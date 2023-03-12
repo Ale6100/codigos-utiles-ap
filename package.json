@@ -12,7 +12,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Ale6100/codigos-utiles-ap.git"
@@ -20,5 +19,10 @@
   "bugs": {
     "url": "https://github.com/Ale6100/codigos-utiles-ap/issues"
   },
-  "homepage": "https://github.com/Ale6100/codigos-utiles-ap#readme"
+  "homepage": "https://github.com/Ale6100/codigos-utiles-ap#readme",
+  "devDependencies": {
+    "@types/lodash": "^4.14.191",
+    "@types/node": "^18.13.0",
+    "typescript": "^4.9.5"
+  }
 }

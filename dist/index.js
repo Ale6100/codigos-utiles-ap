@@ -1,7 +1,7 @@
 // @ts-check
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
-//* ----- NÚMEROS -----
+//! ----- NÚMEROS -----
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
  * @param {number} n Número entre `0` y `100` que representa la probabilidad de que la función devuelva `true`
@@ -183,7 +183,7 @@ export const esPar = (n) => {
         throw new Error(`esPar debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
     return n % 2 === 0;
 };
-//* ----- ARRAYS -----
+//! ----- ARRAYS -----
 /**
  * Recibe un array y retorna un elemento al azar
  * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
@@ -333,7 +333,7 @@ export const ubicacionNElementosMasGrandes = (array, n) => {
     });
     return indices;
 };
-//* ----- STRINGS -----
+//! ----- STRINGS -----
 /**
  * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
  * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
@@ -365,12 +365,54 @@ export const superTrim = (string) => {
         throw new TypeError(`superTrim debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
     string = string.trim();
     while (string.includes("  ")) {
-        // @ts-ignore // Ignoro el siguiente error ya que el ts-check no está actualizado y no detecta que el replaceAll sí existe. Muy pronto mejoraré esto
         string = string.replaceAll("  ", " ");
     }
     return string;
 };
-//* ----- OBJETOS -----
+/**
+ * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneMayuscula("hola mundo") // Retorna false
+ */
+export const tieneMayuscula = (string) => {
+    if (typeof string !== "string")
+        throw new TypeError(`tieneMayuscula debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
+    return /\p{Lu}/u.test(string);
+};
+/**
+ * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+ * @throws {TypeError} Si el argumento no es un string
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+ * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+ */
+export const tieneCaracterEspecial = (string) => {
+    if (typeof string !== "string")
+        throw new TypeError(`tieneCaracterEspecial debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
+    return /[\p{P}\p{S}\p{M}\p{C}\p{Cf}]/gu.test(string);
+};
+/**
+ * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+ * @param string {string} String que se desea analizar
+ * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+ * @throws {TypeError} Si el argumento no es un string
+ */
+export const tieneNumero = (string) => {
+    if (typeof string !== "string")
+        throw new TypeError(`tieneNumero debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
+    return /\d+/u.test(string);
+};
+//! ----- OBJETOS -----
 /**
  * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
@@ -392,7 +434,7 @@ export const crearObjeto = (claves, valores) => {
     });
     return obj;
 };
-//* ----- OTROS -----
+//! ----- OTROS -----
 /**
  * Retorna un color RGB al azar
  * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
@@ -624,6 +666,37 @@ export default {
      * codigosap.superTrim("     Juan     Pérez de  los      Quinotos ") // Retorna "Juan Pérez de los Quinotos"
      */
     superTrim,
+    /**
+     * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene alguna mayúscula
+     * @throws {TypeError} Si el argumento no es un string
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
+     * codigosap.tieneMayuscula("hola mundo") // Retorna false
+     */
+    tieneMayuscula,
+    /**
+     * Recibe un string. Devuelve true si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco)
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter especial
+     * @throws {TypeError} Si el argumento no es un string
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
+     * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
+     */
+    tieneCaracterEspecial,
+    /**
+     * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
+     * @param string {string} String que se desea analizar
+     * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
+     * @throws {TypeError} Si el argumento no es un string
+     */
+    tieneNumero,
     /**
      * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
      * @param {any[]} claves Array cuyos elementos serán las claves del objeto
