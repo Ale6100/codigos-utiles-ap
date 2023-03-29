@@ -17,7 +17,7 @@ export declare const probabilidadDeN: (n: number) => boolean;
  */
 export declare const numeroAlAzar: (num1: number, num2: number) => number;
 /**
- * Recibe dos números enteros y devuelve un número entero al azar entre ellos
+ * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
  * @param {number} num1 Primer número entero
  * @param {number} num2 Segundo número entero
  * @throws {error} Si alguno de los parámetros no es un entero
@@ -237,6 +237,12 @@ export declare const tieneNumero: (string: string) => boolean;
  */
 export declare const crearObjeto: (claves: any[], valores: any[]) => Object;
 /**
+ * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
+ * @param {any} param Valor a analizar
+ * @returns Retorna un valor booleano
+ */
+export declare const esObjetoLiteral: (param: any) => boolean;
+/**
  * Retorna un color RGB al azar
  * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
  */
@@ -279,7 +285,7 @@ declare const _default: {
      */
     numeroAlAzar: (num1: number, num2: number) => number;
     /**
-     * Recibe dos números enteros y devuelve un número entero al azar entre ellos
+     * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
      * @param {number} num1 Primer número entero
      * @param {number} num2 Segundo número entero
      * @throws {error} Si alguno de los parámetros no es un entero
@@ -498,6 +504,12 @@ declare const _default: {
      * @returns Retorna un objeto literal con las características mencionadas
      */
     crearObjeto: (claves: any[], valores: any[]) => Object;
+    /**
+     * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
+     * @param {any} param Valor a analizar
+     * @returns Retorna un valor booleano
+     */
+    esObjetoLiteral: (param: any) => boolean;
     /**
      * Retorna un color RGB al azar
      * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255

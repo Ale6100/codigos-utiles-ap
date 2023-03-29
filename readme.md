@@ -48,7 +48,7 @@ Aquí presento todas las funciones actuales del módulo, que pueden ser llamados
 
 Consejo: En tu editor de código favorito pasa el mouse sobre ellas para obtener una breve explicación que te diga cómo deben ser usadas!
 
-### Funciones para obtener / modificar números
+### Funciones que involucran números
 
 * `probabilidadDeN(n)`
 Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces.
@@ -56,8 +56,8 @@ Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces.
 * `numeroAlAzar(num1, num2)`
 Recibe dos números `num1` y `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`).
 
-* `numeroEnteroAlAzar(num1, num2`
-Recibe dos números enteros y devuelve un número entero al azar entre ellos.
+* `numeroEnteroAlAzar(num1, num2)`
+Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números).
 
 * `esDivisor(num1, num2)`
 Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero).
@@ -75,9 +75,9 @@ Recibe un número y lo devuelve redondeado a dos decimales.
 Recibe un número natural o cero. Devuelve el factorial de dicho número.
 
 * `esPar(n)`
-Recibe un número. Devuelve `true` si es par, pero `false` si es imparr.
+Recibe un número. Devuelve `true` si es par, pero `false` si es impar.
 
-### Funciones para obtener / modificar arrays
+### Funciones que involucran arrays
 
 * `elementoAlAzar(array)`
 Recibe un array y retorna un elemento al azar.
@@ -97,7 +97,7 @@ Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser 
 * `ubicacionNElementosMasGrandes(array, n)` 
 Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos.
 
-### Funciones para obtener / modificar strings
+### Funciones que involucran strings
 
 * `stringAleatorio(n)`
 Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`.
@@ -112,12 +112,15 @@ Recibe un string. Devuelve `true` si contiene alguna mayúscula, sin importar el
 Recibe un string. Devuelve `true` si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco).
 
 * `tieneNumero(string)`
-Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario.
+Recibe un string. Devuelve `true` si el string tiene algún número y `false` en caso contrario.
 
-### Funciones para obtener / modificar objetos
+### Funciones que involucran objetos
 
 * `crearObjeto(claves, valores)`
 Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B.
+
+* `esObjetoLiteral(param)`
+Recibe un elemento de cualquier tipo. Devuelve `true` si es un objeto literal y `false` en caso contrario.
 
 ### Extras
 

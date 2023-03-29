@@ -231,6 +231,10 @@ const crearObjeto = (claves: any[], valores: any[]): Object => {
     return obj
 }
 
+const esObjetoLiteral = (param: any): boolean => {
+    return (typeof param === "object" && !Array.isArray(param) && param !== null)
+}
+
 
 //! ----- OTROS -----
 

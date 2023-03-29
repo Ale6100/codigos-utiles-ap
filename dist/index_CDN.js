@@ -219,6 +219,9 @@ const crearObjeto = (claves, valores) => {
     });
     return obj;
 };
+const esObjetoLiteral = (param) => {
+    return (typeof param === "object" && !Array.isArray(param) && param !== null);
+};
 //! ----- OTROS -----
 const colorRandom = () => {
     const red = Math.floor(Math.random() * 256);

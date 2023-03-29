@@ -1,6 +1,8 @@
 // @ts-check
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
+//? Este es el archivo principal del módulo.
+//? Con el objetivo de hacer que la documentación funcione para ambas maneras de importar el módulo (importándolo todo a la vez o en partes específicas mediante desestructuración) tuve que duplicar la documentación de cada función
 //! ----- NÚMEROS -----
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
@@ -31,7 +33,7 @@ export const numeroAlAzar = (num1, num2) => {
     return numeroMasChico + randomAmpliado; // Desplazo el rango para que inicie donde inicia el número más pequeño
 };
 /**
- * Recibe dos números enteros y devuelve un número entero al azar entre ellos
+ * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
  * @param {number} num1 Primer número entero
  * @param {number} num2 Segundo número entero
  * @throws {error} Si alguno de los parámetros no es un entero
@@ -434,6 +436,14 @@ export const crearObjeto = (claves, valores) => {
     });
     return obj;
 };
+/**
+ * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
+ * @param {any} param Valor a analizar
+ * @returns Retorna un valor booleano
+ */
+export const esObjetoLiteral = (param) => {
+    return (typeof param === "object" && !Array.isArray(param) && param !== null);
+};
 //! ----- OTROS -----
 /**
  * Retorna un color RGB al azar
@@ -487,7 +497,7 @@ export default {
      */
     numeroAlAzar,
     /**
-     * Recibe dos números enteros y devuelve un número entero al azar entre ellos
+     * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
      * @param {number} num1 Primer número entero
      * @param {number} num2 Segundo número entero
      * @throws {error} Si alguno de los parámetros no es un entero
@@ -706,6 +716,12 @@ export default {
      * @returns Retorna un objeto literal con las características mencionadas
      */
     crearObjeto,
+    /**
+     * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
+     * @param {any} param Valor a analizar
+     * @returns Retorna un valor booleano
+     */
+    esObjetoLiteral,
     /**
      * Retorna un color RGB al azar
      * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
