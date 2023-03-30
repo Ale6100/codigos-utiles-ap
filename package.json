@@ -1,6 +1,6 @@
 {
   "name": "codigos-utiles-ap",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "Módulo que contiene códigos para darte una mano en tus proyectos de TypeScript y JavaScript",
   "main": "dist/index.js",
   "type": "module",
