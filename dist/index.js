@@ -19,18 +19,19 @@ export const probabilidadDeN = (n) => {
     return Math.random() * 100 <= n;
 };
 /**
- * Recibe dos números `num1` y `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`)
+ * Recibe dos números `num1` y `num2` donde `num1` <= `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`)
  * @param {number} num1 Primer número
- * @param {number} num2 Segundo número
+ * @param {number} num2 Segundo número (debe ser mayor o igual que el primero)
  * @throws {error} Si alguno de los parámetros no es un número
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
 export const numeroAlAzar = (num1, num2) => {
     if (typeof num1 !== 'number' || typeof num2 !== 'number')
         throw new Error(`numeroAlAzar debe recibir dos números. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`);
-    const randomAmpliado = Math.random() * (Math.abs(num2 - num1)); //  Número al azar entre 0 y |num2-num1| (este último sin incluir)
-    const numeroMasChico = num1 < num2 ? num1 : num2;
-    return numeroMasChico + randomAmpliado; // Desplazo el rango para que inicie donde inicia el número más pequeño
+    if (num1 > num2)
+        throw new Error(`El primer parámetro de numeroAlAzar debe ser menor o igual que el segundo. Se ha recibido ${JSON.stringify(num1)} y ${JSON.stringify(num2)}`);
+    const randomAmpliado = Math.random() * (num2 - num1); //  Número al azar entre 0 y (num2-num1) (este último sin incluir)
+    return num1 + randomAmpliado; // Desplazo el rango para que inicie donde inicia el número más pequeño (num1)
 };
 /**
  * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
@@ -44,6 +45,22 @@ export const numeroEnteroAlAzar = (num1, num2) => {
         throw new Error(`numeroEnteroAlAzar debe recibir dos números enteros. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`);
     const numeroBuscado = Math.round(numeroAlAzar(num1 - 0.5, num2 + 0.5));
     return numeroBuscado === -0 ? 0 : numeroBuscado; // Evitamos que el resultado pueda ser -0 en lugar de 0
+};
+/**
+ * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
+ * @param {number} n Número que se quiere evaluar
+ * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
+ * @throws {Error} Si `n` no es un número
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.esPar(2) // retorna true
+ * codigosap.esPar(3) // retorna false
+ */
+export const esPar = (n) => {
+    if (typeof n !== "number")
+        throw new Error(`esPar debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
+    return n % 2 === 0;
 };
 /**
  * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero)
@@ -76,17 +93,17 @@ export const esDivisor = (num1, num2) => {
 export const divisores = (num) => {
     if (!Number.isInteger(num))
         throw new Error(`divisores debe recibir un número entero. Se ha recibido ${JSON.stringify(num)} (${typeof num})`);
-    if (num == 0)
+    if (num === 0)
         return [Infinity, Infinity];
-    const signoDen = num / Math.abs(num);
+    const signoDeN = num / Math.abs(num);
     num = Math.abs(num);
     let divisoresDeN = [];
     for (let i = 1; i <= num / 2; i++) {
         if (esDivisor(num, i)) {
-            divisoresDeN.push(i * signoDen);
+            divisoresDeN.push(i * signoDeN);
         }
     }
-    divisoresDeN.push(num * signoDen);
+    divisoresDeN.push(num * signoDeN);
     return divisoresDeN;
 };
 /**
@@ -103,34 +120,20 @@ export const divisores = (num) => {
 export const factoresMasCercanos = (n) => {
     if (!Number.isInteger(n) || n <= 0)
         throw new Error(`factoresMasCercanos debe recibir un número natural. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    let divisoresDeN = divisores(n);
-    let res = divisoresDeN;
-    if (divisoresDeN.length != 2) {
-        let factoresDeN = [];
-        let nCopia = n;
-        let i = 1;
-        while (nCopia != 1) { // Acá hago algo que en la secundaria a veces se nombraba como "método de factoreo"
-            if (esDivisor(nCopia, divisoresDeN[i])) {
-                factoresDeN.push(divisoresDeN[i]);
-                nCopia = nCopia / divisoresDeN[i];
-            }
-            else {
-                i = i + 1;
-            }
-        } // Llegados a este punto, si n=12, entonces factoresDeN = [2, 2, 3]. La idea es quedarse únicamente con dos factores en vez de tres.
-        let factor1 = 1;
-        let factor2 = 1;
-        for (let i = 0; i < factoresDeN.length; i++) {
-            if (i < factoresDeN.length / 2) {
-                factor1 = factor1 * factoresDeN[i];
-            }
-            else {
-                factor2 = factor2 * factoresDeN[i];
-            }
-        }
-        res = [factor1, factor2];
+    let divisoresDeN = divisores(n); // Si n=12, entonces esto es [ 1, 2, 3, 4, 6, 12 ]. Para encontrar los factores más cercanos observo que se llega a 12 multiplicando el primero con el último, el segundo con el anteúltimo, etc.
+    const divisoresDeNLength = divisoresDeN.length;
+    if (divisoresDeNLength === 2)
+        return divisoresDeN;
+    let factor1, factor2;
+    if (esPar(divisoresDeNLength)) {
+        factor1 = divisoresDeN[divisoresDeNLength / 2 - 1];
+        factor2 = divisoresDeN[divisoresDeNLength / 2];
     }
-    return res; // Si n=12, entonces retorna [4, 3]
+    else {
+        factor1 = divisoresDeN[Math.floor(divisoresDeNLength / 2)];
+        factor2 = factor1;
+    }
+    return [factor1, factor2]; // Si n=12, entonces retorna [3, 4]
 };
 /**
  * Recibe un número y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
@@ -169,22 +172,6 @@ export const factorial = (n) => {
     }
     return r;
 };
-/**
- * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
- * @param {number} n Número que se quiere evaluar
- * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
- * @throws {Error} Si `n` no es un número
- * @example
- * import codigosap from "codigos-utiles-ap"
- *
- * codigosap.esPar(2) // retorna true
- * codigosap.esPar(3) // retorna false
- */
-export const esPar = (n) => {
-    if (typeof n !== "number")
-        throw new Error(`esPar debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    return n % 2 === 0;
-};
 //! ----- ARRAYS -----
 /**
  * Recibe un array y retorna un elemento al azar
@@ -200,8 +187,7 @@ export const esPar = (n) => {
 export const elementoAlAzar = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`elementoAlAzar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
-    const random = Math.random(); // Número al azar entre 0 y 1 (sin incluir el 1)
-    const randomAmpliado = random * array.length; // Número al azar entre 0 y array.length (sin incluir el array.length)
+    const randomAmpliado = Math.random() * array.length; // Número al azar entre 0 y array.length (sin incluir el array.length)
     const indexAlAzar = Math.floor(randomAmpliado); // Número entero al azar entre 0 y array.length-1. Observar que es una posición i-ésima al azar del array
     return array[indexAlAzar]; // Gracias al indice al azar se devuelve un elemento al azar
 };
@@ -219,10 +205,11 @@ export const elementoAlAzar = (array) => {
 export const mezclarArray = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
+    const arraySplice = Array.from(array); // Necesito copiar para no modificar al original
     const arrayMezclado = [];
-    while (array.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
-        const indiceAzar = Math.floor(Math.random() * array.length);
-        const elementoRandom = array.splice(indiceAzar, 1)[0];
+    while (arraySplice.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
+        const indiceAzar = Math.floor(Math.random() * arraySplice.length);
+        const elementoRandom = arraySplice.splice(indiceAzar, 1)[0];
         arrayMezclado.push(elementoRandom);
     }
     return arrayMezclado;
@@ -245,16 +232,8 @@ export const obtenerNElementos = (array, n) => {
         throw new TypeError(`El primer parámetro de obtenerNElementos debe ser un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     if (!Number.isInteger(n) || n <= 0 || array.length < n)
         throw new Error(`El segundo parámetro de obtenerNElementos debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    const indicesUsados = [];
-    const nuevoArray = [];
-    while (nuevoArray.length < n) { // Agrega n elementos al azar en el nuevo array, siempre y cuando no hayan sido agregados anteriormente
-        const indiceAzar = Math.floor(Math.random() * array.length);
-        if (!indicesUsados.includes(indiceAzar)) {
-            nuevoArray.push(array[indiceAzar]);
-            indicesUsados.push(indiceAzar);
-        }
-    }
-    return nuevoArray;
+    const nuevoArray = mezclarArray(array);
+    return nuevoArray.slice(0, n);
 };
 /**
  * Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final (sin incluir) solicitado, considerando el espaciado especificado
@@ -296,15 +275,18 @@ export const arange = (origen, final, espaciado = 1) => {
 export const linspace = (origen, final, densidad) => {
     if (typeof origen !== 'number' || typeof final !== 'number' || typeof densidad !== 'number')
         throw new Error(`linspace debe recibir números. Se ha recibido ${JSON.stringify(origen)} (${typeof origen}), ${JSON.stringify(final)} (${typeof final}) y ${JSON.stringify(densidad)} (${typeof densidad})`);
-    if (origen == final)
+    if (origen === final)
         throw new Error(`Los primeros dos parámetros de linspace deben ser números distintos. Ambos tienen el siguiente valor: ${JSON.stringify(origen)} (${typeof origen})`);
-    if (densidad < 0)
+    if (densidad <= 0)
         throw new Error(`El tercer parámetro de linspace debe ser un número positivo. Se ha recibido ${JSON.stringify(densidad)} (${typeof densidad})`);
+    if (densidad === 1)
+        return [origen];
     const espaciado = (final - origen) / (densidad - 1);
     const array = [];
-    for (let i = origen; i <= final; i += espaciado) {
-        array.push(i);
+    for (let i = 0; i <= densidad - 2; i++) { // Se agrega desde el primer número hasta el anteúltimo
+        array.push(origen + i * espaciado);
     }
+    array.push(final); // Agrega el último
     return array;
 };
 /**
@@ -325,11 +307,10 @@ export const ubicacionNElementosMasGrandes = (array, n) => {
         throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     if (!Number.isInteger(n) || n <= 0 || array.length < n)
         throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    const arrayCopia = [];
-    array.forEach(elemento => arrayCopia.push(elemento));
-    const valoresMasGrandes = array.sort((a, b) => b - a).slice(0, n);
+    const arrayCopia = Array.from(array); // Necesito copiar para no modificar al original
+    const valoresMasGrandes = arrayCopia.sort((a, b) => b - a).slice(0, n);
     const indices = []; // Ubicacion de los n elementos más grandes del array
-    arrayCopia.forEach((elemento, index) => {
+    array.forEach((elemento, index) => {
         if (valoresMasGrandes.includes(elemento))
             indices.push(index);
     });
@@ -431,9 +412,7 @@ export const crearObjeto = (claves, valores) => {
     if (claves.some(clave => typeof clave === "object"))
         throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`);
     const obj = {};
-    claves.forEach((clave, i) => {
-        obj[clave] = valores[i];
-    });
+    claves.forEach((clave, i) => obj[clave] = valores[i]);
     return obj;
 };
 /**
@@ -505,6 +484,18 @@ export default {
      */
     numeroEnteroAlAzar,
     /**
+     * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
+     * @param {number} n Número que se quiere evaluar
+     * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
+     * @throws {Error} Si `n` no es un número
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.esPar(2) // retorna true
+     * codigosap.esPar(3) // retorna false
+     */
+    esPar,
+    /**
      * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero)
      * @param {number} num1 Primer número
      * @param {number} num2 Segundo número
@@ -566,18 +557,6 @@ export default {
      * codigosap.factorial(4) // retorna 24
      */
     factorial,
-    /**
-     * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
-     * @param {number} n Número que se quiere evaluar
-     * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
-     * @throws {Error} Si `n` no es un número
-     * @example
-     * import codigosap from "codigos-utiles-ap"
-     *
-     * codigosap.esPar(2) // retorna true
-     * codigosap.esPar(3) // retorna false
-     */
-    esPar,
     /**
      * Recibe un array y retorna un elemento al azar
      * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar

@@ -1,12 +1,12 @@
 declare const probabilidadDeN: (n: number) => boolean;
 declare const numeroAlAzar: (num1: number, num2: number) => number;
 declare const numeroEnteroAlAzar: (num1: number, num2: number) => number;
+declare const esPar: (n: number) => boolean;
 declare const esDivisor: (num1: number, num2: number) => boolean;
 declare const divisores: (num: number) => number[];
 declare const factoresMasCercanos: (n: number) => number[];
 declare const redondear: (n: number) => number;
 declare const factorial: (n: number) => number;
-declare const esPar: (n: number) => boolean;
 declare const elementoAlAzar: (array: any[]) => any;
 declare const mezclarArray: (array: any[]) => any[];
 declare const obtenerNElementos: (array: any[], n: number) => any[];

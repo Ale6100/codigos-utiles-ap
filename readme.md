@@ -40,7 +40,7 @@ const elementos = obtenerNElementos([-50, 0, -3, "40", "josé", true, ["Kilo", 3
 <script src="https://cdn.jsdelivr.net/npm/codigos-utiles-ap/dist/index_CDN.min.js"></script>
 ```
 
-No recomiendo esta última opción ya que no tiene sugerencias de autocompletado
+No recomiendo esta última opción ya que no contiene sugerencias de autocompletado ni documentación.
 
 ## Funciones 🤓
 
@@ -54,7 +54,7 @@ Consejo: En tu editor de código favorito pasa el mouse sobre ellas para obtener
 Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces.
 
 * `numeroAlAzar(num1, num2)`
-Recibe dos números `num1` y `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`).
+Recibe dos números `num1` y `num2` donde `num1` <= `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`).
 
 * `numeroEnteroAlAzar(num1, num2)`
 Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números).

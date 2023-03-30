@@ -9,9 +9,9 @@
  */
 export declare const probabilidadDeN: (n: number) => boolean;
 /**
- * Recibe dos números `num1` y `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`)
+ * Recibe dos números `num1` y `num2` donde `num1` <= `num2`. Devuelve un número al azar entre ellos (no incluye al `num2`)
  * @param {number} num1 Primer número
- * @param {number} num2 Segundo número
+ * @param {number} num2 Segundo número (debe ser mayor o igual que el primero)
  * @throws {error} Si alguno de los parámetros no es un número
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
@@ -24,6 +24,18 @@ export declare const numeroAlAzar: (num1: number, num2: number) => number;
  * @returns {number} Retorna un numero entero al azar entre `num1` y `num2`
  */
 export declare const numeroEnteroAlAzar: (num1: number, num2: number) => number;
+/**
+ * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
+ * @param {number} n Número que se quiere evaluar
+ * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
+ * @throws {Error} Si `n` no es un número
+ * @example
+ * import codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.esPar(2) // retorna true
+ * codigosap.esPar(3) // retorna false
+ */
+export declare const esPar: (n: number) => boolean;
 /**
  * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero)
  * @param {number} num1 Primer número
@@ -86,18 +98,6 @@ export declare const redondear: (n: number) => number;
  * codigosap.factorial(4) // retorna 24
  */
 export declare const factorial: (n: number) => number;
-/**
- * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
- * @param {number} n Número que se quiere evaluar
- * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
- * @throws {Error} Si `n` no es un número
- * @example
- * import codigosap from "codigos-utiles-ap"
- *
- * codigosap.esPar(2) // retorna true
- * codigosap.esPar(3) // retorna false
- */
-export declare const esPar: (n: number) => boolean;
 /**
  * Recibe un array y retorna un elemento al azar
  * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
@@ -293,6 +293,18 @@ declare const _default: {
      */
     numeroEnteroAlAzar: (num1: number, num2: number) => number;
     /**
+     * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
+     * @param {number} n Número que se quiere evaluar
+     * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
+     * @throws {Error} Si `n` no es un número
+     * @example
+     * import codigosap from "codigos-utiles-ap"
+     *
+     * codigosap.esPar(2) // retorna true
+     * codigosap.esPar(3) // retorna false
+     */
+    esPar: (n: number) => boolean;
+    /**
      * Recibe dos números. Si `num2` es divisor de `num1` entonces devuelve `true` (es decir, si `num1/num2` tiene resto cero)
      * @param {number} num1 Primer número
      * @param {number} num2 Segundo número
@@ -354,18 +366,6 @@ declare const _default: {
      * codigosap.factorial(4) // retorna 24
      */
     factorial: (n: number) => number;
-    /**
-     * Recibe un número. Devuelve `true` si es par, pero `false` si es impar
-     * @param {number} n Número que se quiere evaluar
-     * @returns {boolean} Retorna `true` si `n` es par, o `false` si es impar
-     * @throws {Error} Si `n` no es un número
-     * @example
-     * import codigosap from "codigos-utiles-ap"
-     *
-     * codigosap.esPar(2) // retorna true
-     * codigosap.esPar(3) // retorna false
-     */
-    esPar: (n: number) => boolean;
     /**
      * Recibe un array y retorna un elemento al azar
      * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
