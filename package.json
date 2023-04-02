@@ -7,10 +7,14 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodemon index.test.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [ "Utils", "Math", "Backend", "Front-end", "Number", "Array", "String", "Object", "Multi", "TypeScript" ],
+  "author": {
+    "name": "Alejandro Portaluppi",
+    "email": "alejandro_portaluppi@outlook.com",
+    "url": "https://portfolioalejandrop.netlify.app/"
+  },
   "license": "ISC",
   "repository": {
     "type": "git",
@@ -21,7 +25,6 @@
   },
   "homepage": "https://github.com/Ale6100/codigos-utiles-ap#readme",
   "devDependencies": {
-    "@types/lodash": "^4.14.191",
     "@types/node": "^18.13.0",
     "typescript": "^4.9.5"
   }

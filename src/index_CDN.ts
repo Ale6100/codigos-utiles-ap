@@ -5,9 +5,7 @@
 
 //? Este archivo está hecho para ser usado exclusivamente como etiqueta link CDN en archivos HTML. La etiqueta es la siguiente: <script src="https://cdn.jsdelivr.net/npm/codigos-utiles-ap/dist/index_CDN.min.js"></script>
 
-
 //! ----- NÚMEROS -----
-
 
 const probabilidadDeN = (n: number): boolean => {
     if (typeof n !== "number" || n < 0 || n > 100) throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
@@ -70,9 +68,10 @@ const factoresMasCercanos = (n: number): number[] => {
     return [factor1, factor2] // Si n=12, entonces retorna [3, 4]
 }
 
-const redondear = (n: number): number => {
-    if (typeof n !== "number") throw new Error(`redondear debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
-    return +(Math.round(parseFloat(n.toString() + "e+2")) + "e-2")
+const round = (n: number, m: number): number => {
+    if (typeof n !== "number" || typeof m !== "number") throw new TypeError(`round debe recibir dos números. Se ha recibido ${JSON.stringify(n)} (${typeof n}) y ${JSON.stringify(m)} (${typeof m})`)
+    if (m < 0 || 100 < m) throw new Error("El segundo parámetro de round debe ser un número entre 0 y 100")
+    return parseFloat(n.toFixed(m));
 };
 
 const factorial = (n: number): number => {
@@ -97,10 +96,11 @@ const elementoAlAzar = (array: any[]): any => {
 
 const mezclarArray = (array: any[]): any[] => {
     if (!Array.isArray(array)) throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    const arraySplice = Array.from(array); // Necesito copiar para no modificar al original
     const arrayMezclado = []
-    while (array.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
-        const indiceAzar = Math.floor(Math.random()*array.length)
-        const elementoRandom = array.splice(indiceAzar, 1)[0]
+    while (arraySplice.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
+        const indiceAzar = Math.floor(Math.random()*arraySplice.length)
+        const elementoRandom = arraySplice.splice(indiceAzar, 1)[0]
         arrayMezclado.push(elementoRandom)
     }
     return arrayMezclado

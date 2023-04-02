@@ -6,9 +6,7 @@
 //? Este es el archivo principal del módulo.
 //? Con el objetivo de hacer que la documentación funcione para ambas maneras de importar el módulo (importándolo todo a la vez o en partes específicas mediante desestructuración) tuve que duplicar la documentación de cada función
 
-
 //! ----- NÚMEROS -----
-
 
 /**
  * Recibe un número `n` entre `0` y `100`. Devuelve `true` el `n%` de las veces
@@ -140,19 +138,22 @@ export const factoresMasCercanos = (n: number): number[] => {
 }
 
 /**
- * Recibe un número y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
+ * Recibe un número `n` y lo devuelve redondeado a `m` decimales
  * @param {number} n Número que se quiere redondear
- * @returns {number} Retorna el número redondeado a dos decimales
- * @throws {Error} - Si `n` no es un número
+ * @param {number} m Cantidad de decimales que se van a redondear
+ * @returns {number} Retorna el número redondeado a `m` decimales
+ * @throws {TypeError} - Si `n` o `m` no son números
+ * @throws {Error} - Si `m` es menor que 0 o mayor que 100
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
- * codigosap.redondear(12.3456) // retorna 12.35
- * codigosap.redondear(16.998) // retorna 17
+ * codigosap.round(12.3456, 2) // retorna 12.35
+ * codigosap.round(16.9982, 3) // retorna 16.998
  */
-export const redondear = (n: number): number => {
-    if (typeof n !== "number") throw new Error(`redondear debe recibir un número. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
-    return +(Math.round(parseFloat(n.toString() + "e+2")) + "e-2")
+export const round = (n: number, m: number): number => {
+    if (typeof n !== "number" || typeof m !== "number") throw new TypeError(`round debe recibir dos números. Se ha recibido ${JSON.stringify(n)} (${typeof n}) y ${JSON.stringify(m)} (${typeof m})`)
+    if (m < 0 || 100 < m) throw new Error("El segundo parámetro de round debe ser un número entre 0 y 100")
+    return parseFloat(n.toFixed(m));
 };
 
 /**
@@ -404,7 +405,7 @@ export const tieneNumero = (string: string): boolean => {
 
 
 /**
- * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
+ * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
  * @param {any[]} valores Array cuyos elementos serán los valores del objeto
  * @throws {TypeError} Si los parámetros no son arrays, o si el primer array contiene algún elemento de tipo object
@@ -556,17 +557,19 @@ export default { // Coloco otra vez las documentaciones, ya que quiero que apare
     factoresMasCercanos,
 
 /**
- * Recibe un número y lo devuelve redondeado a dos decimales. Fuente: https://www.delftstack.com/es/howto/javascript/javascript-round-to-2-decimal-places/#uso-de-la-funci%C3%B3n-personalizada-para-redondear-un-n%C3%BAmero-a-2-decimales-en-javascript
+ * Recibe un número `n` y lo devuelve redondeado a `m` decimales
  * @param {number} n Número que se quiere redondear
- * @returns {number} Retorna el número redondeado a dos decimales
- * @throws {Error} - Si `n` no es un número
+ * @param {number} m Cantidad de decimales que se van a redondear
+ * @returns {number} Retorna el número redondeado a `m` decimales
+ * @throws {TypeError} - Si `n` o `m` no son números
+ * @throws {Error} - Si `m` es menor que 0 o mayor que 100
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
- * codigosap.redondear(12.3456) // retorna 12.35
- * codigosap.redondear(16.998) // retorna 17
+ * codigosap.round(12.3456, 2) // retorna 12.35
+ * codigosap.round(16.9982, 3) // retorna 16.998
  */
-    redondear,
+    round,
     
 /**
  * Recibe un número natural o cero. Devuelve el factorial de dicho número
@@ -722,7 +725,7 @@ export default { // Coloco otra vez las documentaciones, ya que quiero que apare
     tieneNumero,
 
 /**
- * Recibe dos arrays A y B, retorna un objeto cuyas claves son los elementos de A y los valores son los elementos de B
+ * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
  * @param {any[]} valores Array cuyos elementos serán los valores del objeto
  * @throws {TypeError} Si los parámetros no son arrays, o si el primer array contiene algún elemento de tipo object
