@@ -1,6 +1,6 @@
 {
   "name": "codigos-utiles-ap",
-  "version": "1.9.1",
+  "version": "1.10.0",
   "description": "Módulo que contiene códigos para darte una mano en tus proyectos de TypeScript y JavaScript",
   "main": "dist/index.js",
   "type": "module",
@@ -9,7 +9,18 @@
     "dev": "nodemon index.js",
     "test": "nodemon index.test.js"
   },
-  "keywords": [ "Utils", "Math", "Backend", "Front-end", "Number", "Array", "String", "Object", "Multi", "TypeScript" ],
+  "keywords": [
+    "Utils",
+    "Math",
+    "Backend",
+    "Front-end",
+    "Number",
+    "Array",
+    "String",
+    "Object",
+    "Multi",
+    "TypeScript"
+  ],
   "author": {
     "name": "Alejandro Portaluppi",
     "email": "alejandro_portaluppi@outlook.com",
