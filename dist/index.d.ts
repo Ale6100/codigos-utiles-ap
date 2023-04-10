@@ -79,7 +79,7 @@ export declare const factoresMasCercanos: (n: number) => number[];
  * @param {number} m Cantidad de decimales que se van a redondear
  * @returns {number} Retorna el número redondeado a `m` decimales
  * @throws {TypeError} - Si `n` o `m` no son números
- * @throws {Error} - Si `m` es menor que 0 o mayor que 100
+ * @throws {Error} - Si `m` no es un número entero entre 0 y 100
  * @example
  * import codigosap from "codigos-utiles-ap"
  *
@@ -349,7 +349,7 @@ declare const _default: {
      * @param {number} m Cantidad de decimales que se van a redondear
      * @returns {number} Retorna el número redondeado a `m` decimales
      * @throws {TypeError} - Si `n` o `m` no son números
-     * @throws {Error} - Si `m` es menor que 0 o mayor que 100
+     * @throws {Error} - Si `m` no es un número entero entre 0 y 100
      * @example
      * import codigosap from "codigos-utiles-ap"
      *

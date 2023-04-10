@@ -143,7 +143,7 @@ export const factoresMasCercanos = (n: number): number[] => {
  * @param {number} m Cantidad de decimales que se van a redondear
  * @returns {number} Retorna el número redondeado a `m` decimales
  * @throws {TypeError} - Si `n` o `m` no son números
- * @throws {Error} - Si `m` es menor que 0 o mayor que 100
+ * @throws {Error} - Si `m` no es un número entero entre 0 y 100
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 
@@ -152,7 +152,7 @@ export const factoresMasCercanos = (n: number): number[] => {
  */
 export const round = (n: number, m: number): number => {
     if (typeof n !== "number" || typeof m !== "number") throw new TypeError(`round debe recibir dos números. Se ha recibido ${JSON.stringify(n)} (${typeof n}) y ${JSON.stringify(m)} (${typeof m})`)
-    if (m < 0 || 100 < m) throw new Error("El segundo parámetro de round debe ser un número entre 0 y 100")
+    if (m < 0 || 100 < m || !Number.isInteger(m)) throw new Error("El segundo parámetro de round debe ser un número entero entre 0 y 100")
     return parseFloat(n.toFixed(m));
 };
 
@@ -562,7 +562,7 @@ export default { // Coloco otra vez las documentaciones, ya que quiero que apare
  * @param {number} m Cantidad de decimales que se van a redondear
  * @returns {number} Retorna el número redondeado a `m` decimales
  * @throws {TypeError} - Si `n` o `m` no son números
- * @throws {Error} - Si `m` es menor que 0 o mayor que 100
+ * @throws {Error} - Si `m` no es un número entero entre 0 y 100
  * @example
  * import codigosap from "codigos-utiles-ap"
  * 

@@ -70,7 +70,7 @@ const factoresMasCercanos = (n: number): number[] => {
 
 const round = (n: number, m: number): number => {
     if (typeof n !== "number" || typeof m !== "number") throw new TypeError(`round debe recibir dos números. Se ha recibido ${JSON.stringify(n)} (${typeof n}) y ${JSON.stringify(m)} (${typeof m})`)
-    if (m < 0 || 100 < m) throw new Error("El segundo parámetro de round debe ser un número entre 0 y 100")
+    if (m < 0 || 100 < m || !Number.isInteger(m)) throw new Error("El segundo parámetro de round debe ser un número entero entre 0 y 100")
     return parseFloat(n.toFixed(m));
 };
 
