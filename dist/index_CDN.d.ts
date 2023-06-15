@@ -18,6 +18,7 @@ declare const superTrim: (string: string) => string;
 declare const tieneMayuscula: (string: string) => boolean;
 declare const tieneCaracterEspecial: (string: string) => boolean;
 declare const tieneNumero: (string: string) => boolean;
+declare const esStringNumerico: (string: string) => boolean;
 declare const crearObjeto: (claves: any[], valores: any[]) => Object;
 declare const esObjetoLiteral: (param: any) => boolean;
 declare const colorRandom: () => string;

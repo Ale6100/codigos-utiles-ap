@@ -1,5 +1,3 @@
-// @ts-check
-
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 
@@ -57,11 +55,11 @@ const factoresMasCercanos = (n: number): number[] => {
     if (divisoresDeNLength === 2) return divisoresDeN
     
     let factor1: number, factor2: number
-    if (esPar(divisoresDeNLength)) { 
-        factor1 = divisoresDeN[divisoresDeNLength/2 - 1]
-        factor2 = divisoresDeN[divisoresDeNLength/2]
+    if (esPar(divisoresDeNLength)) {
+        factor1 = divisoresDeN.at(divisoresDeNLength/2 - 1) as number // TypeScript no confía en que los valores de estos .at() siempre sean números, pero yo sí
+        factor2 = divisoresDeN.at(divisoresDeNLength/2) as number
     } else {
-        factor1 = divisoresDeN[Math.floor(divisoresDeNLength/2)]
+        factor1 = divisoresDeN.at(Math.floor(divisoresDeNLength/2)) as number
         factor2 = factor1
     }
 
@@ -188,6 +186,11 @@ const tieneNumero = (string: string): boolean => {
     return /\d+/u.test(string)
 }
 
+const esStringNumerico = (string: string): boolean => {
+    if (typeof string !== "string") throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
+    return !isNaN(Number(string)) && string !== "" && !string.includes(" ");
+}
+
 
 //! ----- OBJETOS -----
 
@@ -224,5 +227,5 @@ const colorRandom = (): string => {
 
 const waitFor = (time: number): Promise<void> => {
     if (typeof time !== "number" || time < 0) throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`)
-    return new Promise((resolve, reject) => setTimeout(resolve, time))
+    return new Promise(resolve => setTimeout(resolve, time))
 }

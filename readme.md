@@ -13,7 +13,7 @@
 
 Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algunas de las funciones de JavaScript y TypeScript que ocasionalmente creo por necesidad en otros proyectos. La idea es ir agrandando este módulo cada vez más con el paso del tiempo, con el propósito de ayudarme tanto a mí como a otros programadores de ser posible.
 
-> Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
+Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
 ### Instalación y uso 🔧
 
@@ -26,10 +26,12 @@ npm install codigos-utiles-ap
 Importa el módulo con el nombre que más te guste antes de utilizarlo, por ejemplo:
 
 ```js
-import codigosap from "codigos-utiles-ap"
+import * as codigosap from "codigos-utiles-ap"
 ```
 
-Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección **Funciones**.
+> Nota: Hasta la versión 1.10.1 recomendaba importarlo de la siguiente manera: import codigosap from "codigos-utiles-ap", pero tuve que cambiar el método de importación para no agrandar demasiado el código fuente.
+
+Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección [Funciones](##-Funciones-🤓).
 
 Por ejemplo, si tenemos el siguiente array
 
@@ -63,7 +65,7 @@ const elementos = obtenerNElementos(array, 3)
 
 A continuación se muestran todas las funciones actuales del módulo que pueden ser llamadas tal como se describió anteriormente. Si pasas el cursor del mouse sobre ellas en tu editor de código favorito, obtendrás una breve explicación sobre cómo deben ser usadas.
 
-> Si lo prefieres, también tienes la opción de acceder al archivo principal `index.ts` y copiar manualmente las que desees usar.
+Si lo prefieres, también tienes la opción de acceder al archivo principal [index.ts](src/index.ts) y copiar manualmente las que desees usar.
 
 ### Funciones que involucran números
 
@@ -99,6 +101,7 @@ A continuación se muestran todas las funciones actuales del módulo que pueden 
 | `tieneMayuscula(string)` | Recibe un string. Devuelve `true` si contiene alguna mayúscula, sin importar el idioma de escritura de la letra |
 | `tieneCaracterEspecial(string)` | Recibe un string. Devuelve `true` si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco) |
 | `tieneNumero(string)` | Recibe un string. Devuelve `true` si el string tiene algún número y `false` en caso contrario |
+| `esStringNumerico(string)` | Recibe un string. Devuelve `true` si el string únicamente tiene carácteres numéricos, y `false` en caso contrario |
 
 ### Funciones que involucran objetos
 

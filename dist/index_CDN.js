@@ -1,5 +1,4 @@
 "use strict";
-// @ts-check
 // Link GitHub: https://github.com/Ale6100/codigos-utiles-ap.git
 // Link npm: https://www.npmjs.com/package/codigos-utiles-ap
 //? Este archivo está hecho para ser usado exclusivamente como etiqueta link CDN en archivos HTML. La etiqueta es la siguiente: <script src="https://cdn.jsdelivr.net/npm/codigos-utiles-ap/dist/index_CDN.min.js"></script>
@@ -58,11 +57,11 @@ const factoresMasCercanos = (n) => {
         return divisoresDeN;
     let factor1, factor2;
     if (esPar(divisoresDeNLength)) {
-        factor1 = divisoresDeN[divisoresDeNLength / 2 - 1];
-        factor2 = divisoresDeN[divisoresDeNLength / 2];
+        factor1 = divisoresDeN.at(divisoresDeNLength / 2 - 1); // TypeScript no confía en que los valores de estos .at() siempre sean números, pero yo sí
+        factor2 = divisoresDeN.at(divisoresDeNLength / 2);
     }
     else {
-        factor1 = divisoresDeN[Math.floor(divisoresDeNLength / 2)];
+        factor1 = divisoresDeN.at(Math.floor(divisoresDeNLength / 2));
         factor2 = factor1;
     }
     return [factor1, factor2]; // Si n=12, entonces retorna [3, 4]
@@ -188,6 +187,11 @@ const tieneNumero = (string) => {
         throw new TypeError(`tieneNumero debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
     return /\d+/u.test(string);
 };
+const esStringNumerico = (string) => {
+    if (typeof string !== "string")
+        throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
+    return !isNaN(Number(string)) && string !== "" && !string.includes(" ");
+};
 //! ----- OBJETOS -----
 const crearObjeto = (claves, valores) => {
     if (!Array.isArray(claves) || !Array.isArray(valores))
@@ -213,5 +217,5 @@ const colorRandom = () => {
 const waitFor = (time) => {
     if (typeof time !== "number" || time < 0)
         throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`);
-    return new Promise((resolve, reject) => setTimeout(resolve, time));
+    return new Promise(resolve => setTimeout(resolve, time));
 };
