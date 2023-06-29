@@ -190,7 +190,7 @@ const tieneNumero = (string) => {
 const esStringNumerico = (string) => {
     if (typeof string !== "string")
         throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
-    return !isNaN(Number(string)) && string !== "" && !string.includes(" ");
+    return string !== "" && !string.includes(" ") && !isNaN(Number(string));
 };
 //! ----- OBJETOS -----
 const crearObjeto = (claves, valores) => {
@@ -206,6 +206,11 @@ const crearObjeto = (claves, valores) => {
 };
 const esObjetoLiteral = (param) => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null);
+};
+const tieneSusPropiedades = (objeto, propiedadesObligatorias) => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
+        throw new Error(`tieneSusPropiedades debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
+    return propiedadesObligatorias.every(prop => Object.keys(objeto).includes(prop));
 };
 //! ----- OTROS -----
 const colorRandom = () => {

@@ -258,10 +258,26 @@ export declare const crearObjeto: (claves: any[], valores: any[]) => Object;
  */
 export declare const esObjetoLiteral: (param: any) => boolean;
 /**
- * Retorna un color RGB al azar
- * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
+ * Recibe un objeto literal y un array de strings. Devuelve true si todos los nombres en el array forman parte de las claves del objeto
+ * @param {{[key: string]: any}} objeto Objeto literal a analizar
+ * @param {string[]} propiedadesObligatorias
+ * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
+ * @returns {boolean}
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
  */
-export declare const colorRandom: () => string;
+export declare const tieneSusPropiedades: (objeto: {
+    [key: string]: any;
+}, propiedadesObligatorias: string[]) => boolean;
+/**
+ * Retorna un color RGB al azar
+ * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
+ */
+export declare const colorRandom: () => `rgb(${number}, ${number}, ${number})`;
 /**
  * Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución
  * @param {number} time Tiempo de espera en milisegundos

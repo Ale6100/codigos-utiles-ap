@@ -188,7 +188,7 @@ const tieneNumero = (string: string): boolean => {
 
 const esStringNumerico = (string: string): boolean => {
     if (typeof string !== "string") throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
-    return !isNaN(Number(string)) && string !== "" && !string.includes(" ");
+    return string !== "" && !string.includes(" ") && !isNaN(Number(string));
 }
 
 
@@ -214,16 +214,22 @@ const esObjetoLiteral = (param: any): boolean => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null)
 }
 
+const tieneSusPropiedades = (objeto: {[key: string]: any}, propiedadesObligatorias: string[]): boolean => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneSusPropiedades debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`)
+    return propiedadesObligatorias.every(prop => Object.keys(objeto).includes(prop))
+}
+
 
 //! ----- OTROS -----
 
 
-const colorRandom = (): string => {
+const colorRandom = (): `rgb(${number}, ${number}, ${number})` => {
     const red = Math.floor(Math.random()*256)
     const green = Math.floor(Math.random()*256)
     const blue = Math.floor(Math.random()*256)
     return `rgb(${red}, ${green}, ${blue})`
 }
+
 
 const waitFor = (time: number): Promise<void> => {
     if (typeof time !== "number" || time < 0) throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`)

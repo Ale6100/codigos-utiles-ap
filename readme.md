@@ -31,7 +31,7 @@ import * as codigosap from "codigos-utiles-ap"
 
 > Nota: Hasta la versión 1.10.1 recomendaba importarlo de la siguiente manera: import codigosap from "codigos-utiles-ap", pero tuve que cambiar el método de importación para no agrandar demasiado el código fuente.
 
-Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección [Funciones](##-Funciones-🤓).
+Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección [Funciones](#funciones-).
 
 Por ejemplo, si tenemos el siguiente array
 
@@ -109,6 +109,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | :--- | :--- |
 | `crearObjeto(claves, valores)` | Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores` |
 | `esObjetoLiteral(param)` | Recibe un elemento de cualquier tipo. Devuelve `true` si es un objeto literal y `false` en caso contrario |
+| `tieneSusPropiedades(objeto, propiedadesObligatorias)` | Recibe un objeto literal y un array de strings. Devuelve `true` si todos los nombres en el array forman parte de las claves del objeto |
 
 ### Extras
 

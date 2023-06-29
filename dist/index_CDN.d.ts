@@ -21,5 +21,8 @@ declare const tieneNumero: (string: string) => boolean;
 declare const esStringNumerico: (string: string) => boolean;
 declare const crearObjeto: (claves: any[], valores: any[]) => Object;
 declare const esObjetoLiteral: (param: any) => boolean;
-declare const colorRandom: () => string;
+declare const tieneSusPropiedades: (objeto: {
+    [key: string]: any;
+}, propiedadesObligatorias: string[]) => boolean;
+declare const colorRandom: () => `rgb(${number}, ${number}, ${number})`;
 declare const waitFor: (time: number) => Promise<void>;

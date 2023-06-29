@@ -412,7 +412,7 @@ export const tieneNumero = (string) => {
 export const esStringNumerico = (string) => {
     if (typeof string !== "string")
         throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
-    return !isNaN(Number(string)) && string !== "" && !string.includes(" ");
+    return string !== "" && !string.includes(" ") && !isNaN(Number(string));
 };
 //! ----- OBJETOS -----
 /**
@@ -442,10 +442,28 @@ export const crearObjeto = (claves, valores) => {
 export const esObjetoLiteral = (param) => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null);
 };
+/**
+ * Recibe un objeto literal y un array de strings. Devuelve true si todos los nombres en el array forman parte de las claves del objeto
+ * @param {{[key: string]: any}} objeto Objeto literal a analizar
+ * @param {string[]} propiedadesObligatorias
+ * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
+ * @returns {boolean}
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
+ * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
+ */
+export const tieneSusPropiedades = (objeto, propiedadesObligatorias) => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
+        throw new Error(`tieneSusPropiedades debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
+    return propiedadesObligatorias.every(prop => Object.keys(objeto).includes(prop));
+};
 //! ----- OTROS -----
 /**
  * Retorna un color RGB al azar
- * @returns {string} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
+ * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
  */
 export const colorRandom = () => {
     const red = Math.floor(Math.random() * 256);

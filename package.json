@@ -5,8 +5,8 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node dist/index.js",
+    "dev": "nodemon dist/index.js",
     "test": "nodemon index.test.js"
   },
   "keywords": [
