@@ -443,22 +443,40 @@ export const esObjetoLiteral = (param) => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null);
 };
 /**
- * Recibe un objeto literal y un array de strings. Devuelve true si todos los nombres en el array forman parte de las claves del objeto
+ * Recibe un objeto literal y un array de strings. Devuelve true si el objeto contiene todas las propiedades obligatorias especificadas en el array
  * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesObligatorias
+ * @param {string[]} propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
  * import * as codigosap from "codigos-utiles-ap"
  *
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
  */
-export const tieneSusPropiedades = (objeto, propiedadesObligatorias) => {
+export const tieneLasPropiedadesObligatorias = (objeto, propiedadesObligatorias) => {
     if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
-        throw new Error(`tieneSusPropiedades debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
-    return propiedadesObligatorias.every(prop => Object.keys(objeto).includes(prop));
+        throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
+    return propiedadesObligatorias.every(prop => objeto.hasOwnProperty(prop));
+};
+/**
+ * Recibe un objeto literal y un array de strings. Devuelve true si el objeto sólo contiene las propiedades permitidas especificadas en el array
+ * @param {{[key: string]: any}} objeto Objeto literal a analizar
+ * @param {string[]} propiedadesPermitidas Un array de strings que representa las propiedades permitidas
+ * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
+ * @returns {boolean}
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com"}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna false
+ */
+export const tieneSoloLasPropiedadesPermitidas = (objeto, propiedadesPermitidas) => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim()))
+        throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`);
+    return Object.keys(objeto).every(prop => propiedadesPermitidas.includes(prop));
 };
 //! ----- OTROS -----
 /**

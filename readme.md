@@ -109,7 +109,8 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | :--- | :--- |
 | `crearObjeto(claves, valores)` | Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores` |
 | `esObjetoLiteral(param)` | Recibe un elemento de cualquier tipo. Devuelve `true` si es un objeto literal y `false` en caso contrario |
-| `tieneSusPropiedades(objeto, propiedadesObligatorias)` | Recibe un objeto literal y un array de strings. Devuelve `true` si todos los nombres en el array forman parte de las claves del objeto |
+| `tieneLasPropiedadesObligatorias(objeto, propiedadesObligatorias)` | Recibe un objeto literal y un array de strings. Devuelve `true` si el objeto contiene todas las propiedades obligatorias especificadas en el array |
+| `tieneSoloLasPropiedadesPermitidas(objeto, propiedadesPermitidas)` | Recibe un objeto literal y un array de strings. Devuelve `true` si el objeto sólo contiene las propiedades permitidas especificadas en el array |
 
 ### Extras
 

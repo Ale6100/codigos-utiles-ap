@@ -258,21 +258,37 @@ export declare const crearObjeto: (claves: any[], valores: any[]) => Object;
  */
 export declare const esObjetoLiteral: (param: any) => boolean;
 /**
- * Recibe un objeto literal y un array de strings. Devuelve true si todos los nombres en el array forman parte de las claves del objeto
+ * Recibe un objeto literal y un array de strings. Devuelve true si el objeto contiene todas las propiedades obligatorias especificadas en el array
  * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesObligatorias
+ * @param {string[]} propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
  * import * as codigosap from "codigos-utiles-ap"
  *
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
- * codigosap.tieneSusPropiedades({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
+ * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
  */
-export declare const tieneSusPropiedades: (objeto: {
+export declare const tieneLasPropiedadesObligatorias: (objeto: {
     [key: string]: any;
 }, propiedadesObligatorias: string[]) => boolean;
+/**
+ * Recibe un objeto literal y un array de strings. Devuelve true si el objeto sólo contiene las propiedades permitidas especificadas en el array
+ * @param {{[key: string]: any}} objeto Objeto literal a analizar
+ * @param {string[]} propiedadesPermitidas Un array de strings que representa las propiedades permitidas
+ * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
+ * @returns {boolean}
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com"}, ["email", "password"]) // Retorna true
+ * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna false
+ */
+export declare const tieneSoloLasPropiedadesPermitidas: (objeto: {
+    [key: string]: any;
+}, propiedadesPermitidas: string[]) => boolean;
 /**
  * Retorna un color RGB al azar
  * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255

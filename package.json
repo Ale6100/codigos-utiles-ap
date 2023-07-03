@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
-    "dev": "nodemon dist/index.js",
-    "test": "nodemon index.test.js"
+    "dev": "node --watch dist/index.js",
+    "test": "node --watch index.test.js"
   },
   "keywords": [
     "Utils",

@@ -207,10 +207,15 @@ const crearObjeto = (claves, valores) => {
 const esObjetoLiteral = (param) => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null);
 };
-const tieneSusPropiedades = (objeto, propiedadesObligatorias) => {
+const tieneLasPropiedadesObligatorias = (objeto, propiedadesObligatorias) => {
     if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
-        throw new Error(`tieneSusPropiedades debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
-    return propiedadesObligatorias.every(prop => Object.keys(objeto).includes(prop));
+        throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
+    return propiedadesObligatorias.every(prop => objeto.hasOwnProperty(prop));
+};
+const tieneSoloLasPropiedadesPermitidas = (objeto, propiedadesPermitidas) => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim()))
+        throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`);
+    return Object.keys(objeto).every(prop => propiedadesPermitidas.includes(prop));
 };
 //! ----- OTROS -----
 const colorRandom = () => {
