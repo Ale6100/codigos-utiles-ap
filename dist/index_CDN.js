@@ -143,14 +143,20 @@ const ubicacionNElementosMasGrandes = (array, n) => {
         throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     if (!Number.isInteger(n) || n <= 0 || array.length < n)
         throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    const arrayCopia = Array.from(array); // Necesito copiar para no modificar al original
-    const valoresMasGrandes = arrayCopia.sort((a, b) => b - a).slice(0, n);
+    const valoresMasGrandes = array.toSorted((a, b) => b - a).slice(0, n);
     const indices = []; // Ubicacion de los n elementos más grandes del array
     array.forEach((elemento, index) => {
         if (valoresMasGrandes.includes(elemento))
             indices.push(index);
     });
     return indices;
+};
+const eliminarNumerosYStringsRepetidos = (array) => {
+    if (!Array.isArray(array))
+        throw new TypeError(`eliminarNumerosYStringsRepetidos debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
+    if (array.some(e => !(typeof e === "string" || (typeof e === "number" && !isNaN(e)))))
+        throw new TypeError(`El array de eliminarNumerosYStringsRepetidos sólo debe contener elementos de tipo string y number (y sin NaN). Se ha recibido ${JSON.stringify(array)}`);
+    return array.filter((elemento, index) => array.indexOf(elemento) === index);
 };
 //! ----- STRINGS -----
 const stringAleatorio = (n) => {

@@ -309,14 +309,31 @@ export const ubicacionNElementosMasGrandes = (array, n) => {
         throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     if (!Number.isInteger(n) || n <= 0 || array.length < n)
         throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    const arrayCopia = Array.from(array); // Necesito copiar para no modificar al original
-    const valoresMasGrandes = arrayCopia.sort((a, b) => b - a).slice(0, n);
+    const valoresMasGrandes = array.toSorted((a, b) => b - a).slice(0, n);
     const indices = []; // Ubicacion de los n elementos más grandes del array
     array.forEach((elemento, index) => {
         if (valoresMasGrandes.includes(elemento))
             indices.push(index);
     });
     return indices;
+};
+/**
+ * Recibe un array de números y strings. No se permiten NaN. Devuelve un array sin elementos repetidos
+ * @param {(string | number)[]} array Array de números y strings
+ * @returns {(string | number)[]} Retorna un array sin elementos repetidos
+ * @throws {TypeError} Si el argumento no es un array de números y strings, o si algún elemento es NaN
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.eliminarNumerosYStringsRepetidos([1, 'a', 2, 'a', 1, 3]) // Retorna [1, 'a', 2, 3]
+ * codigosap.eliminarNumerosYStringsRepetidos(['a', 'b', 'a', 'c']) // Retorna ['a', 'b', 'c']
+ */
+export const eliminarNumerosYStringsRepetidos = (array) => {
+    if (!Array.isArray(array))
+        throw new TypeError(`eliminarNumerosYStringsRepetidos debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
+    if (array.some(e => !(typeof e === "string" || (typeof e === "number" && !isNaN(e)))))
+        throw new TypeError(`El array de eliminarNumerosYStringsRepetidos sólo debe contener elementos de tipo string y number (y sin NaN). Se ha recibido ${JSON.stringify(array)}`);
+    return array.filter((elemento, index) => array.indexOf(elemento) === index);
 };
 //! ----- STRINGS -----
 /**

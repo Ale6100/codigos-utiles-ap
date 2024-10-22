@@ -138,8 +138,7 @@ const linspace = (origen: number, final: number, densidad: number): number[] => 
 const ubicacionNElementosMasGrandes = (array: number[], n: number): number[] => {
     if (!Array.isArray(array) || !array.every(elemento => typeof elemento === "number")) throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
-    const arrayCopia = Array.from(array); // Necesito copiar para no modificar al original
-    const valoresMasGrandes = arrayCopia.sort((a, b) => b-a).slice(0, n)    
+    const valoresMasGrandes = array.toSorted((a, b) => b-a).slice(0, n)
 
     const indices: number[] = [] // Ubicacion de los n elementos más grandes del array
     array.forEach((elemento, index) => {
@@ -148,6 +147,11 @@ const ubicacionNElementosMasGrandes = (array: number[], n: number): number[] => 
     return indices
 }
 
+const eliminarNumerosYStringsRepetidos = (array: (string | number)[]): (string | number)[] => {
+    if (!Array.isArray(array)) throw new TypeError(`eliminarNumerosYStringsRepetidos debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (array.some(e => !(typeof e === "string" || (typeof e === "number" && !isNaN(e))))) throw new TypeError(`El array de eliminarNumerosYStringsRepetidos sólo debe contener elementos de tipo string y number (y sin NaN). Se ha recibido ${JSON.stringify(array)}`)
+    return array.filter((elemento, index) => array.indexOf(elemento) === index);
+}
 
 //! ----- STRINGS -----
 
@@ -199,13 +203,13 @@ const crearObjeto = (claves: any[], valores: any[]): Object => {
     if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`)
     if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`)
     if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`)
-    
-    interface myObject {
+
+    interface MyObject {
         [key: string]: string
     }
-    
-    const obj: myObject = {}
-    
+
+    const obj: MyObject = {}
+
     claves.forEach((clave: string, i: number) => obj[clave] = valores[i])
     return obj
 }

@@ -11,7 +11,7 @@
  * @returns {boolean} Valor booleano que representa si se ha cumplido la probabilidad dada por `n`
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
  */
 export const probabilidadDeN = (n: number): boolean => {
@@ -35,7 +35,7 @@ export const numeroAlAzar = (num1: number, num2: number): number => {
 
 /**
  * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
- * @param {number} num1 Primer número entero 
+ * @param {number} num1 Primer número entero
  * @param {number} num2 Segundo número entero
  * @throws {error} Si alguno de los parámetros no es un entero
  * @returns {number} Retorna un numero entero al azar entre `num1` y `num2`
@@ -53,7 +53,7 @@ export const numeroEnteroAlAzar = (num1: number, num2: number): number => {
  * @throws {Error} Si `n` no es un número
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.esPar(2) // retorna true
  * codigosap.esPar(3) // retorna false
  */
@@ -70,7 +70,7 @@ export const esPar = (n: number): boolean => {
  * @returns {boolean} Devuelve `true` si `num2` es divisor de `num1`, y `false` en caso contrario
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.esDivisor(6, 3) // retorna true
  * codigosap.esDivisor(7, 3) // retorna false
  */
@@ -86,7 +86,7 @@ export const esDivisor = (num1: number, num2: number): boolean => {
  * @returns {number[]} Un array con los divisores del número `num`
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.divisores(12) // returns [1, 2, 3, 4, 6, 12]
  * codigosap.divisores(-12) // returns [-1, -2, -3, -4, -6, -12]
  */
@@ -112,7 +112,7 @@ export const divisores = (num: number): number[] => {
  * @throws {Error} Si `n` no es un número natural
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.factoresMasCercanos(12) // retorna [4, 3]
  * codigosap.factoresMasCercanos(16) // retorna [4, 4]
  */
@@ -121,7 +121,7 @@ export const factoresMasCercanos = (n: number): number[] => {
     let divisoresDeN = divisores(n) // Si n=12, entonces esto es [ 1, 2, 3, 4, 6, 12 ]. Para encontrar los factores más cercanos observo que se llega a 12 multiplicando el primero con el último, el segundo con el anteúltimo, etc.
     const divisoresDeNLength = divisoresDeN.length
     if (divisoresDeNLength === 2) return divisoresDeN
-    
+
     let factor1: number, factor2: number
     if (esPar(divisoresDeNLength)) {
         factor1 = divisoresDeN.at(divisoresDeNLength/2 - 1) as number // TypeScript no confía en que los valores de estos .at() siempre sean números, pero yo sí
@@ -143,7 +143,7 @@ export const factoresMasCercanos = (n: number): number[] => {
  * @throws {Error} - Si `m` no es un número entero entre 0 y 100
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.round(12.3456, 2) // retorna 12.35
  * codigosap.round(16.9982, 3) // retorna 16.998
  */
@@ -160,7 +160,7 @@ export const round = (n: number, m: number): number => {
  * @throws {Error} Si `n` no es un número natural o es menor que cero
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.factorial(1) // retorna 1
  * codigosap.factorial(3) // retorna 6
  * codigosap.factorial(4) // retorna 24
@@ -185,7 +185,7 @@ export const factorial = (n: number): number => {
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.elementoAlAzar([1, 'b', 3, 4]) // Puede retornar cualquiera de los elementos del array
  * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
@@ -203,7 +203,7 @@ export const elementoAlAzar = (array: any[]): any => {
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.mezclarArray([1, 'b', 3, 4]) // Puede retornar cualquier combinación de los elementos del array
  * codigosap.mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
  */
@@ -227,7 +227,7 @@ export const mezclarArray = (array: any[]): any[] => {
  * @throws {Error} Si el primer argumento no es un array o el segundo argumento no es un número natural y menor o igual a la longitud del array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.obtenerNElementos([1, 'b', 3, 4], 2) // Puede retornar cualquier combinación de dos elementos del array
  * codigosap.obtenerNElementos(['a', 'b', 5], 1) // Puede retornar cualquier elemento del array
  * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
@@ -248,7 +248,7 @@ export const obtenerNElementos = (array: any[], n: number): any[] => {
  * @throws {Error} Si `origen` o `final` no son números o si `espaciado` no es un número positivo.
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.arange(0, 10, 2) // Retorna [0, 2, 4, 6, 8]
  * codigosap.arange(1, 10) // Retorna [1, 2, 3, 4, 5, 6, 7, 8, 9]
  */
@@ -271,7 +271,7 @@ export const arange = (origen: number, final: number, espaciado: number = 1): nu
  * @throws {Error} Si alguno de los tres argumentos no es un número, si `origen` es igual a `final`, o si `densidad` es negativa.
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.linspace(0, 10, 5) // Retorna [0, 2.5, 5, 7.5, 10]
  * codigosap.linspace(-1, 1, 3) // Retorna [-1, 0, 1]
  */
@@ -298,21 +298,37 @@ export const linspace = (origen: number, final: number, densidad: number): numbe
  * @throws {Error} Si el segundo argumento no es un número natural menor o igual a la longitud del array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.ubicacionNElementosMasGrandes([5, 3, 8, 1, 9, 6], 3) // Retorna [2, 4, 5]
  * codigosap.ubicacionNElementosMasGrandes([1, 3, 4, 0, 3], 2) // Retorna [1, 2, 4]
  */
 export const ubicacionNElementosMasGrandes = (array: number[], n: number): number[] => {
     if (!Array.isArray(array) || !array.every(elemento => typeof elemento === "number")) throw new TypeError(`El primer parámetro de ubicacionNElementosMasGrandes debe ser un array de números. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de ubicacionNElementosMasGrandes debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
-    const arrayCopia = Array.from(array); // Necesito copiar para no modificar al original
-    const valoresMasGrandes = arrayCopia.sort((a, b) => b-a).slice(0, n)    
+    const valoresMasGrandes = array.toSorted((a, b) => b-a).slice(0, n)
 
     const indices: number[] = [] // Ubicacion de los n elementos más grandes del array
     array.forEach((elemento, index) => {
         if (valoresMasGrandes.includes(elemento)) indices.push(index)
     })
     return indices
+}
+
+/**
+ * Recibe un array de números y strings. No se permiten NaN. Devuelve un array sin elementos repetidos
+ * @param {(string | number)[]} array Array de números y strings
+ * @returns {(string | number)[]} Retorna un array sin elementos repetidos
+ * @throws {TypeError} Si el argumento no es un array de números y strings, o si algún elemento es NaN
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.eliminarNumerosYStringsRepetidos([1, 'a', 2, 'a', 1, 3]) // Retorna [1, 'a', 2, 3]
+ * codigosap.eliminarNumerosYStringsRepetidos(['a', 'b', 'a', 'c']) // Retorna ['a', 'b', 'c']
+ */
+export const eliminarNumerosYStringsRepetidos = (array: (string | number)[]): (string | number)[] => {
+    if (!Array.isArray(array)) throw new TypeError(`eliminarNumerosYStringsRepetidos debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
+    if (array.some(e => !(typeof e === "string" || (typeof e === "number" && !isNaN(e))))) throw new TypeError(`El array de eliminarNumerosYStringsRepetidos sólo debe contener elementos de tipo string y number (y sin NaN). Se ha recibido ${JSON.stringify(array)}`)
+    return array.filter((elemento, index) => array.indexOf(elemento) === index);
 }
 
 
@@ -342,7 +358,7 @@ export const stringAleatorio = (n: number): string => {
  * @throws {TypeError} Si `string` no es un string
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.superTrim("     Juan     Pérez de  los      Quinotos ") // Retorna "Juan Pérez de los Quinotos"
  */
 export const superTrim = (string: string): string => {
@@ -361,7 +377,7 @@ export const superTrim = (string: string): string => {
  * @throws {TypeError} Si el argumento no es un string
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.tieneMayuscula("gamma mayúscula: Γ") // Retorna true
  * codigosap.tieneMayuscula("hola mundo") // Retorna false
  */
@@ -377,7 +393,7 @@ export const tieneMayuscula = (string: string): boolean => {
  * @throws {TypeError} Si el argumento no es un string
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.tieneCaracterEspecial("gamma mayúscula: Γ") // Retorna true
  * codigosap.tieneCaracterEspecial("hola mundo") // Retorna false (no se consideran los espacios)
  */
@@ -390,7 +406,7 @@ export const tieneCaracterEspecial = (string: string): boolean => {
  * Recibe un string. Devuelve true si el string tiene algún número y false en caso contrario
  * @param string {string} String que se desea analizar
  * @returns {boolean} Retorna un booleano que indica si el argumento contiene algún caracter numérico
- * @throws {TypeError} Si el argumento no es un string 
+ * @throws {TypeError} Si el argumento no es un string
  */
 export const tieneNumero = (string: string): boolean => {
     if (typeof string !== "string") throw new TypeError(`tieneNumero debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`)
@@ -401,10 +417,10 @@ export const tieneNumero = (string: string): boolean => {
  * Recibe un string. Devuelve true si el string únicamente tiene carácteres numéricos, y false en caso contrario
  * @param string {string} String que se desea analizar
  * @returns {boolean} Retorna un booleano que indica si el argumento está formado por carácteres numéricos
- * @throws {TypeError} Si el argumento no es un string 
+ * @throws {TypeError} Si el argumento no es un string
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.esStringNumerico("asdyu513asoidh") // Retorna false
  * codigosap.esStringNumerico("123.11") // Retorna true
  * codigosap.esStringNumerico(" 512 ") // Retorna false (los espacios en blanco no se deben ignorar)
@@ -430,13 +446,13 @@ export const crearObjeto = (claves: any[], valores: any[]): Object => {
     if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`)
     if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`)
     if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`)
-    
-    interface myObject {
+
+    interface MyObject {
         [key: string]: string
     }
-    
-    const obj: myObject = {}
-    
+
+    const obj: MyObject = {}
+
     claves.forEach((clave: string, i: number) => obj[clave] = valores[i])
     return obj
 }

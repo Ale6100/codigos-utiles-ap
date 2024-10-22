@@ -181,6 +181,18 @@ export declare const linspace: (origen: number, final: number, densidad: number)
  */
 export declare const ubicacionNElementosMasGrandes: (array: number[], n: number) => number[];
 /**
+ * Recibe un array de números y strings. No se permiten NaN. Devuelve un array sin elementos repetidos
+ * @param {(string | number)[]} array Array de números y strings
+ * @returns {(string | number)[]} Retorna un array sin elementos repetidos
+ * @throws {TypeError} Si el argumento no es un array de números y strings, o si algún elemento es NaN
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.eliminarNumerosYStringsRepetidos([1, 'a', 2, 'a', 1, 3]) // Retorna [1, 'a', 2, 3]
+ * codigosap.eliminarNumerosYStringsRepetidos(['a', 'b', 'a', 'c']) // Retorna ['a', 'b', 'c']
+ */
+export declare const eliminarNumerosYStringsRepetidos: (array: (string | number)[]) => (string | number)[];
+/**
  * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
  * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
  * @returns {string} Retorna un string aleatorio de longitud `n`

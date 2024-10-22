@@ -13,6 +13,7 @@ declare const obtenerNElementos: (array: any[], n: number) => any[];
 declare const arange: (origen: number, final: number, espaciado?: number) => number[];
 declare const linspace: (origen: number, final: number, densidad: number) => number[];
 declare const ubicacionNElementosMasGrandes: (array: number[], n: number) => number[];
+declare const eliminarNumerosYStringsRepetidos: (array: (string | number)[]) => (string | number)[];
 declare const stringAleatorio: (n: number) => string;
 declare const superTrim: (string: string) => string;
 declare const tieneMayuscula: (string: string) => boolean;

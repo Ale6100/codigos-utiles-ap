@@ -15,11 +15,11 @@ Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algu
 
 Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
-### Instalación y uso 🔧
+## Instalación y uso 🔧
 
 * Para instalar el paquete, ejecuta en la terminal:
 
-```
+```bash
 npm install codigos-utiles-ap
 ```
 
@@ -91,6 +91,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | `arange(origen, final, espaciado = 1)` | Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final (sin incluir) solicitado, considerando el espaciado especificado |
 | `linspace(origen, final, densidad)` | Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores especificados |
 | `ubicacionNElementosMasGrandes(array, n)` | Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos |
+| `eliminarNumerosYStringsRepetidos` | Recibe un array de números y strings. Devuelve un array sin elementos repetidos |
 
 ### Funciones que involucran strings
 
