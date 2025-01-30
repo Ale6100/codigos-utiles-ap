@@ -123,7 +123,7 @@ export declare const elementoAlAzar: (array: any[]) => any;
  * codigosap.mezclarArray([1, 'b', 3, 4]) // Puede retornar cualquier combinación de los elementos del array
  * codigosap.mezclarArray([]) // Retorna un array vacío, ya que el array de entrada estaba vacío
  */
-export declare const mezclarArray: (array: any[]) => any[];
+export declare const mezclarArray: <T>(array: T[]) => T[];
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
  * @param {any[]} array Array del cual se quieren seleccionar los elementos
@@ -193,12 +193,14 @@ export declare const ubicacionNElementosMasGrandes: (array: number[], n: number)
  */
 export declare const eliminarNumerosYStringsRepetidos: (array: (string | number)[]) => (string | number)[];
 /**
- * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
- * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
- * @returns {string} Retorna un string aleatorio de longitud `n`
- * @throws {Error} Si `n` no es un número natural
+ * Recibe dos números `a` y `b` (con `a` menor o igual que `b`),
+ * devuelve un string con caracteres aleatorios de longitud entre `a` y `b`
+ * @param {number} a Límite inferior para la longitud del string (número natural).
+ * @param {number} b Límite superior para la longitud del string (número natural).
+ * @returns {string} Retorna un string aleatorio de longitud entre `a` y `b`
+ * @throws {Error} Si `a` o `b` no son números naturales o si `a > b`
  */
-export declare const stringAleatorio: (n: number) => string;
+export declare const stringAleatorio: (a: number, b: number) => string;
 /**
  * Recibe un string, devuelve el mismo string sin espacios en blanco en ambos extremos y reemplaza todos los espacios consecutivos por uno solo
  * @param {string} string String cuyos espacios se desea recortar

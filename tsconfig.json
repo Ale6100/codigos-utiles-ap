@@ -3,8 +3,8 @@
     /* Visit https://aka.ms/tsconfig to read more about this file */
     /* https://www.youtube.com/watch?v=I1ZFsPK0Q-Y&ab_channel=LucasPaganini */
 
-    "target": "ESNext",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    // "lib": [],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "target": "ES2022",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["ESNext", "DOM"],                            /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "useDefineForClassFields": true,                     /* Emit ECMAScript-standard-compliant class fields. */
 
     "module": "ES6",                                     /* Specify what module code is generated. */

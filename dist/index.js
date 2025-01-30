@@ -12,8 +12,8 @@
  * codigosap.probabilidadDeN(40) // devuelve true o false con una probabilidad del 40%
  */
 export const probabilidadDeN = (n) => {
-    if (typeof n !== "number" || n < 0 || n > 100)
-        throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
+    if (typeof n !== "number" || isNaN(n) || n < 0 || n > 100)
+        throw new Error(`probabilidadDeN debe recibir un número entre 0 y 100. Se recibió ${n} (${typeof n})`);
     return Math.random() * 100 <= n;
 };
 /**
@@ -24,12 +24,11 @@ export const probabilidadDeN = (n) => {
  * @returns {number} Un número al azar entre `num1` y `num2` (sin incluir al `num2`)
  */
 export const numeroAlAzar = (num1, num2) => {
-    if (typeof num1 !== 'number' || typeof num2 !== 'number')
-        throw new Error(`numeroAlAzar debe recibir dos números. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`);
+    if (typeof num1 !== 'number' || typeof num2 !== 'number' || isNaN(num1) || isNaN(num2))
+        throw new Error(`numeroAlAzar requiere números válidos. Se recibió ${num1} y ${num2}`);
     if (num1 > num2)
-        throw new Error(`El primer parámetro de numeroAlAzar debe ser menor o igual que el segundo. Se ha recibido ${JSON.stringify(num1)} y ${JSON.stringify(num2)}`);
-    const randomAmpliado = Math.random() * (num2 - num1); //  Número al azar entre 0 y (num2-num1) (este último sin incluir)
-    return num1 + randomAmpliado; // Desplazo el rango para que inicie donde inicia el número más pequeño (num1)
+        throw new Error(`num1 debe ser <= num2. Se recibió ${num1} y ${num2}`);
+    return num1 + Math.random() * (num2 - num1);
 };
 /**
  * Recibe dos números enteros y devuelve un número entero al azar entre ellos (incluyendo a ambos números)
@@ -73,8 +72,10 @@ export const esPar = (n) => {
  * codigosap.esDivisor(7, 3) // retorna false
  */
 export const esDivisor = (num1, num2) => {
-    if (typeof num1 !== "number" || typeof num2 !== "number")
-        throw new TypeError(`esDivisor debe recibir números. Se ha recibido ${JSON.stringify(num1)} (${typeof num1}) y ${JSON.stringify(num2)} (${typeof num2})`);
+    if (typeof num1 !== "number" || typeof num2 !== "number" || isNaN(num1) || isNaN(num2))
+        throw new TypeError(`esDivisor requiere dos números. Se recibió ${num1} (${typeof num1}) y ${num2} (${typeof num2})`);
+    if (num2 === 0)
+        throw new Error("num2 no puede ser cero");
     return num1 % num2 === 0;
 };
 /**
@@ -148,10 +149,11 @@ export const factoresMasCercanos = (n) => {
  */
 export const round = (n, m) => {
     if (typeof n !== "number" || typeof m !== "number")
-        throw new TypeError(`round debe recibir dos números. Se ha recibido ${JSON.stringify(n)} (${typeof n}) y ${JSON.stringify(m)} (${typeof m})`);
-    if (m < 0 || 100 < m || !Number.isInteger(m))
-        throw new Error("El segundo parámetro de round debe ser un número entero entre 0 y 100");
-    return parseFloat(n.toFixed(m));
+        throw new TypeError("round requiere números");
+    if (m < 0 || m > 100 || !Number.isInteger(m))
+        throw new Error("m debe ser entero entre 0 y 100");
+    const factor = Math.pow(10, m);
+    return Math.round((n + Number.EPSILON) * factor) / factor;
 };
 /**
  * Recibe un número natural o cero. Devuelve el factorial de dicho número
@@ -189,9 +191,7 @@ export const factorial = (n) => {
 export const elementoAlAzar = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`elementoAlAzar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
-    const randomAmpliado = Math.random() * array.length; // Número al azar entre 0 y array.length (sin incluir el array.length)
-    const indexAlAzar = Math.floor(randomAmpliado); // Número entero al azar entre 0 y array.length-1. Observar que es una posición i-ésima al azar del array
-    return array[indexAlAzar]; // Gracias al indice al azar se devuelve un elemento al azar
+    return array[Math.floor(Math.random() * array.length)];
 };
 /**
  * Recibe un array y lo devuelve mezclado
@@ -207,14 +207,12 @@ export const elementoAlAzar = (array) => {
 export const mezclarArray = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
-    const arraySplice = Array.from(array); // Necesito copiar para no modificar al original
-    const arrayMezclado = [];
-    while (arraySplice.length > 0) { // Elimino un elemento al azar del array original, y al mismo tiempo lo coloco en el "array mezclado". Repito el ciclo hasta que el array original quede vacío
-        const indiceAzar = Math.floor(Math.random() * arraySplice.length);
-        const elementoRandom = arraySplice.splice(indiceAzar, 1)[0];
-        arrayMezclado.push(elementoRandom);
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
-    return arrayMezclado;
+    return shuffled;
 };
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
@@ -255,11 +253,10 @@ export const arange = (origen, final, espaciado = 1) => {
         throw new Error(`Los primeros dos parámetros de arange deben ser númericos. Se ha recibido ${JSON.stringify(origen)} (${typeof origen}) y ${JSON.stringify(final)} (${typeof final})`);
     if (typeof espaciado !== 'number' || espaciado <= 0)
         throw new Error(`El tercer parámetro de arange debe ser un número mayor a cero. Se ha recibido ${JSON.stringify(espaciado)} (${typeof espaciado})`);
-    const array = [];
-    for (let i = origen; i < final; i += espaciado) {
-        array.push(i);
-    }
-    return array;
+    if ((final - origen) / espaciado <= 0)
+        return [];
+    const steps = Math.ceil((final - origen) / espaciado);
+    return Array.from({ length: steps }, (_, i) => origen + i * espaciado);
 };
 /**
  * Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores especificados
@@ -333,21 +330,26 @@ export const eliminarNumerosYStringsRepetidos = (array) => {
         throw new TypeError(`eliminarNumerosYStringsRepetidos debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     if (array.some(e => !(typeof e === "string" || (typeof e === "number" && !isNaN(e)))))
         throw new TypeError(`El array de eliminarNumerosYStringsRepetidos sólo debe contener elementos de tipo string y number (y sin NaN). Se ha recibido ${JSON.stringify(array)}`);
-    return array.filter((elemento, index) => array.indexOf(elemento) === index);
+    return [...new Set(array)];
 };
 //! ----- STRINGS -----
 /**
- * Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n`
- * @param {number} n Longitud esperada del string a retornar. Debe ser un número natural (entero positivo)
- * @returns {string} Retorna un string aleatorio de longitud `n`
- * @throws {Error} Si `n` no es un número natural
+ * Recibe dos números `a` y `b` (con `a` menor o igual que `b`),
+ * devuelve un string con caracteres aleatorios de longitud entre `a` y `b`
+ * @param {number} a Límite inferior para la longitud del string (número natural).
+ * @param {number} b Límite superior para la longitud del string (número natural).
+ * @returns {string} Retorna un string aleatorio de longitud entre `a` y `b`
+ * @throws {Error} Si `a` o `b` no son números naturales o si `a > b`
  */
-export const stringAleatorio = (n) => {
-    if (!Number.isInteger(n) || n <= 0)
-        throw new Error(`stringAleatorio debe recibir número natural. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
+export const stringAleatorio = (a, b) => {
+    if (!Number.isInteger(a) || !Number.isInteger(b) || a <= 0 || b <= 0)
+        throw new Error(`stringAleatorio debe recibir dos números naturales. Se han recibido ${JSON.stringify(a)} (${typeof a}) y ${JSON.stringify(b)} (${typeof b})`);
+    if (a > b)
+        throw new Error(`stringAleatorio: El límite inferior 'a' no puede ser mayor que el límite superior 'b'`);
+    const longitud = numeroEnteroAlAzar(a, b);
     const simbolos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789¡!¿?@#$%&()+-=*,.;:_";
     let stringRandom = "";
-    for (let i = 1; i <= n; i++) {
+    for (let i = 1; i <= longitud; i++) {
         stringRandom += simbolos[Math.floor(simbolos.length * Math.random())];
     }
     return stringRandom;
@@ -365,11 +367,7 @@ export const stringAleatorio = (n) => {
 export const superTrim = (string) => {
     if (typeof string !== "string")
         throw new TypeError(`superTrim debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
-    string = string.trim();
-    while (string.includes("  ")) {
-        string = string.replaceAll("  ", " ");
-    }
-    return string;
+    return string.trim().replace(/\s+/g, ' ');
 };
 /**
  * Recibe un string. Devuelve true si contiene alguna mayúscula, sin importar el idioma de escritura de la letra

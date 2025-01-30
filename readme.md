@@ -29,8 +29,6 @@ Importa el módulo con el nombre que más te guste antes de utilizarlo, por ejem
 import * as codigosap from "codigos-utiles-ap"
 ```
 
-> Nota: Hasta la versión 1.10.1 recomendaba importarlo de la siguiente manera: import codigosap from "codigos-utiles-ap", pero tuve que cambiar el método de importación para no agrandar demasiado el código fuente.
-
 Desde este momento, `codigosap` es un objeto que contiene como métodos a todas las funciones descritas en la sección [Funciones](#funciones-).
 
 Por ejemplo, si tenemos el siguiente array
@@ -97,7 +95,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 
 | Implementación | Descripción |
 | :--- | :--- |
-| `stringAleatorio(n)` | Recibe un número `n` natural, devuelve un string con carácteres aleatorios de longitud `n` |
+| `stringAleatorio(a, b)` | Recibe dos números `a` y `b` (con `a` menor o igual que `b`), devuelve un string con caracteres aleatorios de longitud entre `a` y `b` |
 | `superTrim(string)` | Recibe un string, devuelve el mismo string sin espacios en blanco en ambos extremos y reemplaza todos los espacios consecutivos por uno solo |
 | `tieneMayuscula(string)` | Recibe un string. Devuelve `true` si contiene alguna mayúscula, sin importar el idioma de escritura de la letra |
 | `tieneCaracterEspecial(string)` | Recibe un string. Devuelve `true` si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco) |
@@ -130,4 +128,7 @@ Estoy abierto a sugerencias!
 
 ## Autor ✒️
 
-* **Alejandro Portaluppi** - [LinkedIn](https://www.linkedin.com/in/alejandro-portaluppi/)
+| ![Alejandro Portaluppi](https://avatars.githubusercontent.com/u/107259761?size=50) |
+|:-:|
+| **Alejandro Portaluppi** |
+|[![GitHub](https://img.shields.io/badge/github-%23121011.svg?&style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ale6100) [![LinkedIn](https://img.shields.io/badge/linkedin%20-%230077B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alejandro-portaluppi) |
