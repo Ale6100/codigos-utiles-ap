@@ -87,7 +87,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | `mezclarArray(array)` | Recibe un array y lo devuelve mezclado |
 | `obtenerNElementos(array, n)` | Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array |
 | `arange(origen, final, espaciado = 1)` | Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final (sin incluir) solicitado, considerando el espaciado especificado |
-| `linspace(origen, final, densidad)` | Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considrando la densidad (cantidad) de valores especificados |
+| `linspace(origen, final, densidad)` | Recibe tres números. Los primeros dos deben ser distintos. El tercero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final solicitado, considerando la densidad (cantidad) de valores especificados |
 | `ubicacionNElementosMasGrandes(array, n)` | Recibe un array de números y un número natural `n`. Devuelve un array de números enteros con las posiciones de los `n` elementos más grandes del array original, o más si hay un empate en los últimos puestos |
 | `eliminarNumerosYStringsRepetidos` | Recibe un array de números y strings. Devuelve un array sin elementos repetidos |
 
@@ -101,6 +101,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | `tieneCaracterEspecial(string)` | Recibe un string. Devuelve `true` si tiene algún carácter de puntuación, símbolo, marcador, control o caracter de formato (no se consideran los espacios en blanco) |
 | `tieneNumero(string)` | Recibe un string. Devuelve `true` si el string tiene algún número y `false` en caso contrario |
 | `esStringNumerico(string)` | Recibe un string. Devuelve `true` si el string únicamente tiene carácteres numéricos, y `false` en caso contrario |
+| `unirStrings(arrayAUnir, nonValue)` | Recibe un array de strings y un string. Devuelve un string que es la concatenación de los elementos del array separados por un espacio, o el valor del segundo argumento si el array está vacío o no contiene strings |
 
 ### Funciones que involucran objetos
 
@@ -117,6 +118,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 | :--- | :--- |
 | `colorRandom()` | Retorna un color RGB al azar |
 | `waitFor(time)` | Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución |
+| `colorBasadoEnString(string, max)` | Retorna un color RGB basado en un string de entrada |
 
 Estoy abierto a sugerencias!
 

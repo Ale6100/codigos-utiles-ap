@@ -119,7 +119,7 @@ export const divisores = (num) => {
 export const factoresMasCercanos = (n) => {
     if (!Number.isInteger(n) || n <= 0)
         throw new Error(`factoresMasCercanos debe recibir un número natural. Se ha recibido ${JSON.stringify(n)} (${typeof n})`);
-    let divisoresDeN = divisores(n); // Si n=12, entonces esto es [ 1, 2, 3, 4, 6, 12 ]. Para encontrar los factores más cercanos observo que se llega a 12 multiplicando el primero con el último, el segundo con el anteúltimo, etc.
+    let divisoresDeN = divisores(n); // Si n=12, entonces esto es [1, 2, 3, 4, 6, 12]. Para encontrar los factores más cercanos observo que se llega a 12 multiplicando el primero con el último, el segundo con el anteúltimo, etc.
     const divisoresDeNLength = divisoresDeN.length;
     if (divisoresDeNLength === 2)
         return divisoresDeN;
@@ -208,7 +208,7 @@ export const mezclarArray = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
+    for (let i = shuffled.length - 1; i > 0; i--) { // Algoritmo de Fisher-Yates
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
@@ -429,6 +429,29 @@ export const esStringNumerico = (string) => {
         throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
     return string !== "" && !string.includes(" ") && !isNaN(Number(string));
 };
+/**
+ * Recibe un array de strings y un string. Devuelve un string que es la concatenación de los elementos del array separados por un espacio, o el valor del segundo argumento si el array está vacío o no contiene strings.
+ * Nota: Cuando digo "array de strings" también incluyo null y undefined
+ * @param {(string | null | undefined)[]} arrayAUnir Array cuyos elementos serán concatenados
+ * @param {string} nonValue Valor a retornar si el array está vacío o no contiene strings
+ * @throws {TypeError} Si el primer argumento no es un array de strings o si el segundo argumento no es un string
+ * @returns {string} Retorna un string con las características mencionadas
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.unirStrings(["hola", "mundo"], "no hay elementos") // Retorna "hola mundo"
+ * codigosap.unirStrings([], "no hay elementos") // Retorna "no hay elementos"
+ * codigosap.unirStrings([null, undefined, "hola"], "no hay elementos") // Retorna "hola"
+ */
+export const unirStrings = (arrayAUnir, nonValue) => {
+    if (!Array.isArray(arrayAUnir))
+        throw new TypeError(`unirStrings debe recibir un array. Se ha recibido ${JSON.stringify(arrayAUnir)} (${typeof arrayAUnir})`);
+    if (typeof nonValue !== 'string')
+        throw new TypeError(`El segundo parámetro de unirStrings debe ser un string. Se ha recibido ${JSON.stringify(nonValue)} (${typeof nonValue})`);
+    if (arrayAUnir.length === 0 || arrayAUnir.every(s => typeof s !== 'string' || s === ''))
+        return nonValue;
+    return arrayAUnir.filter(s => typeof s === 'string' && s != '').join(' ');
+};
 //! ----- OBJETOS -----
 /**
  * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
@@ -525,4 +548,26 @@ export const waitFor = (time) => {
     if (typeof time !== "number" || time < 0)
         throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`);
     return new Promise(resolve => setTimeout(resolve, time));
+};
+/**
+ * Retorna un color RGB basado en un string de entrada
+ * @param {string} input - String que determina el color generado
+ * @param {number} max - El valor máximo que puede tomar cada componente de color
+ * @throws {TypeError} Si `input` no es un string
+ * @throws {Error} Si `max` no es un número entero entre 0 y 255
+ * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde cada componente es un entero entre 0 y `max`
+ */
+export const colorBasadoEnString = (input, max) => {
+    if (typeof input !== 'string')
+        throw new TypeError(`colorBasadoEnString debe recibir un string. Se ha recibido ${JSON.stringify(input)} (${typeof input})`);
+    if (typeof max !== 'number' || max < 0)
+        throw new Error(`colorBasadoEnString debe recibir un número positivo o cero como segundo parámetro. Se ha recibido ${JSON.stringify(max)} (${typeof max})`);
+    if (max > 255)
+        throw new Error(`colorBasadoEnString: El segundo parámetro no puede ser mayor a 255. Se ha recibido ${JSON.stringify(max)} (${typeof max})`);
+    const hash = Array.from(input).reduce((acc, ch) => acc * 31 + ch.codePointAt(0), 0);
+    const divisor = max + 1;
+    const red = (hash * 37) % divisor;
+    const green = (hash * 53) % divisor;
+    const blue = (hash * 67) % divisor;
+    return `rgb(${red}, ${green}, ${blue})`;
 };

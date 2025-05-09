@@ -257,6 +257,21 @@ export declare const tieneNumero: (string: string) => boolean;
  */
 export declare const esStringNumerico: (string: string) => boolean;
 /**
+ * Recibe un array de strings y un string. Devuelve un string que es la concatenación de los elementos del array separados por un espacio, o el valor del segundo argumento si el array está vacío o no contiene strings.
+ * Nota: Cuando digo "array de strings" también incluyo null y undefined
+ * @param {(string | null | undefined)[]} arrayAUnir Array cuyos elementos serán concatenados
+ * @param {string} nonValue Valor a retornar si el array está vacío o no contiene strings
+ * @throws {TypeError} Si el primer argumento no es un array de strings o si el segundo argumento no es un string
+ * @returns {string} Retorna un string con las características mencionadas
+ * @example
+ * import * as codigosap from "codigos-utiles-ap"
+ *
+ * codigosap.unirStrings(["hola", "mundo"], "no hay elementos") // Retorna "hola mundo"
+ * codigosap.unirStrings([], "no hay elementos") // Retorna "no hay elementos"
+ * codigosap.unirStrings([null, undefined, "hola"], "no hay elementos") // Retorna "hola"
+ */
+export declare const unirStrings: (arrayAUnir: (string | null | undefined)[], nonValue: string) => string;
+/**
  * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
  * @param {any[]} claves Array cuyos elementos serán las claves del objeto
  * @param {any[]} valores Array cuyos elementos serán los valores del objeto
@@ -326,3 +341,12 @@ export declare const colorRandom: () => `rgb(${number}, ${number}, ${number})`;
     funcionDeEjemplo()
  */
 export declare const waitFor: (time: number) => Promise<void>;
+/**
+ * Retorna un color RGB basado en un string de entrada
+ * @param {string} input - String que determina el color generado
+ * @param {number} max - El valor máximo que puede tomar cada componente de color
+ * @throws {TypeError} Si `input` no es un string
+ * @throws {Error} Si `max` no es un número entero entre 0 y 255
+ * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde cada componente es un entero entre 0 y `max`
+ */
+export declare const colorBasadoEnString: (input: string, max: number) => `rgb(${number}, ${number}, ${number})`;

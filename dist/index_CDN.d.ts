@@ -20,6 +20,7 @@ declare const tieneMayuscula: (string: string) => boolean;
 declare const tieneCaracterEspecial: (string: string) => boolean;
 declare const tieneNumero: (string: string) => boolean;
 declare const esStringNumerico: (string: string) => boolean;
+declare const unirStrings: (arrayAUnir: (string | null | undefined)[], nonValue: string) => string;
 declare const crearObjeto: (claves: any[], valores: any[]) => Object;
 declare const esObjetoLiteral: (param: any) => boolean;
 declare const tieneLasPropiedadesObligatorias: (objeto: {
@@ -30,3 +31,4 @@ declare const tieneSoloLasPropiedadesPermitidas: (objeto: {
 }, propiedadesPermitidas: string[]) => boolean;
 declare const colorRandom: () => `rgb(${number}, ${number}, ${number})`;
 declare const waitFor: (time: number) => Promise<void>;
+declare const colorBasadoEnString: (input: string, max: number) => `rgb(${number}, ${number}, ${number})`;

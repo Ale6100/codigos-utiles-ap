@@ -94,7 +94,7 @@ const mezclarArray = (array) => {
     if (!Array.isArray(array))
         throw new TypeError(`mezclar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`);
     const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
+    for (let i = shuffled.length - 1; i > 0; i--) { // Algoritmo de Fisher-Yates
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
     }
@@ -194,6 +194,15 @@ const esStringNumerico = (string) => {
         throw new TypeError(`esStringNumerico debe recibir un string. Se ha recibido ${JSON.stringify(string)} (${typeof string})`);
     return string !== "" && !string.includes(" ") && !isNaN(Number(string));
 };
+const unirStrings = (arrayAUnir, nonValue) => {
+    if (!Array.isArray(arrayAUnir))
+        throw new TypeError(`unirStrings debe recibir un array. Se ha recibido ${JSON.stringify(arrayAUnir)} (${typeof arrayAUnir})`);
+    if (typeof nonValue !== 'string')
+        throw new TypeError(`El segundo parámetro de unirStrings debe ser un string. Se ha recibido ${JSON.stringify(nonValue)} (${typeof nonValue})`);
+    if (arrayAUnir.length === 0 || arrayAUnir.every(s => typeof s !== 'string' || s === ''))
+        return nonValue;
+    return arrayAUnir.filter(s => typeof s === 'string' && s != '').join(' ');
+};
 //! ----- OBJETOS -----
 const crearObjeto = (claves, valores) => {
     if (!Array.isArray(claves) || !Array.isArray(valores))
@@ -230,4 +239,18 @@ const waitFor = (time) => {
     if (typeof time !== "number" || time < 0)
         throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`);
     return new Promise(resolve => setTimeout(resolve, time));
+};
+const colorBasadoEnString = (input, max) => {
+    if (typeof input !== 'string')
+        throw new TypeError(`colorBasadoEnString debe recibir un string. Se ha recibido ${JSON.stringify(input)} (${typeof input})`);
+    if (typeof max !== 'number' || max < 0)
+        throw new Error(`colorBasadoEnString debe recibir un número positivo o cero como segundo parámetro. Se ha recibido ${JSON.stringify(max)} (${typeof max})`);
+    if (max > 255)
+        throw new Error(`colorBasadoEnString: El segundo parámetro no puede ser mayor a 255. Se ha recibido ${JSON.stringify(max)} (${typeof max})`);
+    const hash = Array.from(input).reduce((acc, ch) => acc * 31 + ch.codePointAt(0), 0);
+    const divisor = max + 1;
+    const red = (hash * 37) % divisor;
+    const green = (hash * 53) % divisor;
+    const blue = (hash * 67) % divisor;
+    return `rgb(${red}, ${green}, ${blue})`;
 };
