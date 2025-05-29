@@ -15,6 +15,8 @@ Bienvenido! Este proyecto nació bajo el deseo de guardar y publicar en npm algu
 
 Revisa la documentación regularmente [aquí](https://www.npmjs.com/package/codigos-utiles-ap) para chequear que utilizas la última versión.
 
+Alternativamente, puedes ver la documentación provista por [DeepWiki](https://deepwiki.com/Ale6100/codigos-utiles-ap).
+
 ## Instalación y uso 🔧
 
 * Para instalar el paquete, ejecuta en la terminal:
