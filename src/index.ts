@@ -181,8 +181,8 @@ export const factorial = (n: number): number => {
 
 /**
  * Recibe un array y retorna un elemento al azar
- * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
- * @returns {any} Retorna un elemento al azar del array
+ * @param array Array del cual se quiere seleccionar un elemento al azar
+ * @returns Retorna un elemento al azar del array
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
@@ -190,15 +190,15 @@ export const factorial = (n: number): number => {
  * codigosap.elementoAlAzar([1, 'b', 3, 4]) // Puede retornar cualquiera de los elementos del array
  * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
-export const elementoAlAzar = (array: any[]): any => {
+export const elementoAlAzar = <T>(array: T[]): T | undefined => {
     if (!Array.isArray(array)) throw new TypeError(`elementoAlAzar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     return array[Math.floor(Math.random()*array.length)]
 }
 
 /**
  * Recibe un array y lo devuelve mezclado
- * @param {any[]} array Array que se pretende mezclar
- * @returns {any[]} Retorna el array mezclado
+ * @param array Array que se pretende mezclar
+ * @returns Retorna el array mezclado
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
@@ -218,18 +218,18 @@ export const mezclarArray = <T>(array: T[]): T[] => {
 
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
- * @param {any[]} array Array del cual se quieren seleccionar los elementos
- * @param {number} n Cantidad de elementos del array que se quieren seleccionar
- * @returns {any[]} Retorna un array con `n` elementos seleccionados al azar del array de entrada
+ * @param array Array del cual se quieren seleccionar los elementos
+ * @param n Cantidad de elementos del array que se quieren seleccionar
+ * @returns Retorna un array con `n` elementos seleccionados al azar del array de entrada
  * @throws {Error} Si el primer argumento no es un array o el segundo argumento no es un número natural y menor o igual a la longitud del array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
  *
  * codigosap.obtenerNElementos([1, 'b', 3, 4], 2) // Puede retornar cualquier combinación de dos elementos del array
  * codigosap.obtenerNElementos(['a', 'b', 5], 1) // Puede retornar cualquier elemento del array
- * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos 
+ * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos
  */
-export const obtenerNElementos = (array: any[], n: number): any[] => {
+export const obtenerNElementos = <T>(array: T[], n: number): T[] => {
     if (!Array.isArray(array)) throw new TypeError(`El primer parámetro de obtenerNElementos debe ser un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de obtenerNElementos debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     const nuevoArray = mezclarArray(array)
@@ -452,54 +452,63 @@ export const unirStrings = (arrayAUnir: (string | null | undefined)[], nonValue:
 
 /**
  * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
- * @param {any[]} claves Array cuyos elementos serán las claves del objeto
- * @param {any[]} valores Array cuyos elementos serán los valores del objeto
+ * @param claves Array cuyos elementos serán las claves del objeto
+ * @param valores Array cuyos elementos serán los valores del objeto
  * @throws {TypeError} Si los parámetros no son arrays, o si el primer array contiene algún elemento de tipo object
  * @throws {Error} Si los parámetros no son arrays de igual longitud
  * @returns Retorna un objeto literal con las características mencionadas
  */
-export const crearObjeto = (claves: any[], valores: any[]): Object => {
-    if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`)
-    if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`)
-    if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`)
+export const crearObjeto = <K extends string | number | symbol, V>(
+    claves: K[],
+    valores: V[]
+): Record<K, V> => {
+    if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`);
+    if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`);
+    if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`);
 
-    const obj: Record<string, any> = {}
+    const obj: Record<K, V> = {} as Record<K, V>
 
-    claves.forEach((clave: string, i: number) => obj[clave] = valores[i])
+    claves.forEach((clave, i) => {
+        obj[clave] = valores[i]!
+    })
+
     return obj
 }
 
 /**
  * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
- * @param {any} param Valor a analizar
+ * @param param Valor a analizar
  * @returns Retorna un valor booleano
  */
-export const esObjetoLiteral = (param: any): boolean => {
+export const esObjetoLiteral = (param: unknown): param is Record<string | number | symbol, unknown> => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null)
 }
 
 /**
  * Recibe un objeto literal y un array de strings. Devuelve true si el objeto contiene todas las propiedades obligatorias especificadas en el array
- * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
+ * @param objeto Objeto literal a analizar
+ * @param propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
  * import * as codigosap from "codigos-utiles-ap"
- * 
+ *
  * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: 123}, ["email", "password"]) // Retorna true
  * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
  * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
  */
-export const tieneLasPropiedadesObligatorias = (objeto: {[key: string]: any}, propiedadesObligatorias: string[]): boolean => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`)
-    return propiedadesObligatorias.every(prop => objeto.hasOwnProperty(prop));
+export const tieneLasPropiedadesObligatorias = (
+    objeto: unknown,
+    propiedadesObligatorias: string[]
+): objeto is Record<string, unknown> => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.length === 0 || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`)
+    return propiedadesObligatorias.every(prop => Object.hasOwn(objeto, prop));
 }
 
 /**
  * Recibe un objeto literal y un array de strings. Devuelve true si el objeto sólo contiene las propiedades permitidas especificadas en el array
- * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesPermitidas Un array de strings que representa las propiedades permitidas
+ * @param objeto Objeto literal a analizar
+ * @param propiedadesPermitidas Un array de strings que representa las propiedades permitidas
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
@@ -509,8 +518,11 @@ export const tieneLasPropiedadesObligatorias = (objeto: {[key: string]: any}, pr
  * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com"}, ["email", "password"]) // Retorna true
  * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna false
  */
-export const tieneSoloLasPropiedadesPermitidas = (objeto: {[key: string]: any}, propiedadesPermitidas: string[]): boolean => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`)
+export const tieneSoloLasPropiedadesPermitidas = (
+    objeto: unknown,
+    propiedadesPermitidas: string[]
+): objeto is Record<string, unknown> => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.length === 0 || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`)
     return Object.keys(objeto).every(prop => propiedadesPermitidas.includes(prop))
 }
 
@@ -520,18 +532,51 @@ export const tieneSoloLasPropiedadesPermitidas = (objeto: {[key: string]: any}, 
 
 /**
  * Retorna un color RGB al azar
- * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
+ * @param {Object} options Opciones para generar el color
+ * @param {number} options.min Valor mínimo para los componentes RGB (por defecto 0)
+ * @param {number} options.max Valor máximo para los componentes RGB (por defecto 255)
+ * @param {number} options.red Valor fijo para el componente rojo, anula la generación aleatoria
+ * @param {number} options.green Valor fijo para el componente verde, anula la generación aleatoria
+ * @param {number} options.blue Valor fijo para el componente azul, anula la generación aleatoria
+ * @returns {`rgb(${number}, ${number}, ${number})`} String con formato "rgb(red, green, blue)" donde cada componente es un entero entre min y max
  */
-export const colorRandom = (): `rgb(${number}, ${number}, ${number})` => {
-    const red = Math.floor(Math.random()*256)
-    const green = Math.floor(Math.random()*256)
-    const blue = Math.floor(Math.random()*256)
-    return `rgb(${red}, ${green}, ${blue})`
-}
+export const colorRandom = ({
+  min = 0,
+  max = 255,
+  red,
+  green,
+  blue
+}: {
+  min?: number;
+  max?: number;
+  red?: number;
+  green?: number;
+  blue?: number;
+} = {}): `rgb(${number}, ${number}, ${number})` => {
+  const validarEnteroEnRango = (nombre: string, valor: number, rangoMin: number, rangoMax: number) => {
+    if (!Number.isInteger(valor) || valor < rangoMin || valor > rangoMax) {
+      throw new Error(`${nombre} debe ser un número entero entre ${rangoMin} y ${rangoMax}. Se recibió ${valor}`);
+    }
+  };
+
+  validarEnteroEnRango("min", min, 0, 255);
+  validarEnteroEnRango("max", max, 0, 255);
+
+  if (min > max) {
+    throw new Error(`El valor mínimo debe ser menor o igual al máximo. Se recibió min: ${min}, max: ${max}`);
+  }
+
+  if (red != null) validarEnteroEnRango("red", red, 0, 255);
+  if (green != null) validarEnteroEnRango("green", green, 0, 255);
+  if (blue != null) validarEnteroEnRango("blue", blue, 0, 255);
+
+  const randomInt = () => Math.floor(Math.random() * (max - min + 1)) + min;
+  return `rgb(${red ?? randomInt()}, ${green ?? randomInt()}, ${blue ?? randomInt()})`;
+};
 
 /**
  * Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución
- * @param {number} time Tiempo de espera en milisegundos 
+ * @param {number} time Tiempo de espera en milisegundos
  * @returns {Promise<void>} Una promesa que se resuelve cuando se cumple el tiempo de espera
  * @throws {Error} Si el parámetro `time` no es un número positivo.
  * @example

@@ -86,7 +86,7 @@ const factorial = (n: number): number => {
 //! ----- ARRAYS -----
 
 
-const elementoAlAzar = (array: any[]): any => {
+const elementoAlAzar = <T>(array: T[]): T | undefined => {
     if (!Array.isArray(array)) throw new TypeError(`elementoAlAzar debe recibir un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     return array[Math.floor(Math.random()*array.length)]
 }
@@ -101,7 +101,7 @@ const mezclarArray = <T>(array: T[]): T[] => {
     return shuffled;
 }
 
-const obtenerNElementos = (array: any[], n: number): any[] => {
+const obtenerNElementos = <T>(array: T[], n: number): T[] => {
     if (!Array.isArray(array)) throw new TypeError(`El primer parámetro de obtenerNElementos debe ser un array. Se ha recibido ${JSON.stringify(array)} (${typeof array})`)
     if (!Number.isInteger(n) || n <= 0 || array.length < n) throw new Error(`El segundo parámetro de obtenerNElementos debe ser un número natural menor o igual a la longitud del array del primer parámetro. Se ha recibido ${JSON.stringify(n)} (${typeof n})`)
     const nuevoArray = mezclarArray(array)
@@ -199,28 +199,40 @@ const unirStrings = (arrayAUnir: (string | null | undefined)[], nonValue: string
 //! ----- OBJETOS -----
 
 
-const crearObjeto = (claves: any[], valores: any[]): Object => {
-    if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`)
-    if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`)
-    if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`)
+const crearObjeto = <K extends string | number | symbol, V>(
+    claves: K[],
+    valores: V[]
+): Record<K, V> => {
+    if (!Array.isArray(claves) || !Array.isArray(valores)) throw new TypeError(`crearObjeto debe recibir dos arrays. Se ha recibido ${JSON.stringify(claves)} (${typeof claves}) y ${JSON.stringify(valores)} (${typeof valores})`);
+    if (claves.length !== valores.length) throw new Error(`Los parámetros de crearObjeto deben ser arrays de igual longitud`);
+    if (claves.some(clave => typeof clave === "object")) throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`);
 
-    const obj: Record<string, any> = {}
+    const obj: Record<K, V> = {} as Record<K, V>
 
-    claves.forEach((clave: string, i: number) => obj[clave] = valores[i])
+    claves.forEach((clave, i) => {
+        obj[clave] = valores[i]!
+    })
+
     return obj
 }
 
-const esObjetoLiteral = (param: any): boolean => {
+const esObjetoLiteral = (param: unknown): param is Record<string | number | symbol, unknown> => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null)
 }
 
-const tieneLasPropiedadesObligatorias = (objeto: {[key: string]: any}, propiedadesObligatorias: string[]): boolean => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`)
-    return propiedadesObligatorias.every(prop => objeto.hasOwnProperty(prop));
+const tieneLasPropiedadesObligatorias = (
+    objeto: unknown,
+    propiedadesObligatorias: string[]
+): objeto is Record<string, unknown> => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.length === 0 || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`)
+    return propiedadesObligatorias.every(prop => Object.hasOwn(objeto, prop));
 }
 
-const tieneSoloLasPropiedadesPermitidas = (objeto: {[key: string]: any}, propiedadesPermitidas: string[]): boolean => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`)
+const tieneSoloLasPropiedadesPermitidas = (
+    objeto: unknown,
+    propiedadesPermitidas: string[]
+): objeto is Record<string, unknown> => {
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.length === 0 || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim())) throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`)
     return Object.keys(objeto).every(prop => propiedadesPermitidas.includes(prop))
 }
 
@@ -228,13 +240,39 @@ const tieneSoloLasPropiedadesPermitidas = (objeto: {[key: string]: any}, propied
 //! ----- OTROS -----
 
 
-const colorRandom = (): `rgb(${number}, ${number}, ${number})` => {
-    const red = Math.floor(Math.random()*256)
-    const green = Math.floor(Math.random()*256)
-    const blue = Math.floor(Math.random()*256)
-    return `rgb(${red}, ${green}, ${blue})`
-}
+const colorRandom = ({
+  min = 0,
+  max = 255,
+  red,
+  green,
+  blue
+}: {
+  min?: number;
+  max?: number;
+  red?: number;
+  green?: number;
+  blue?: number;
+} = {}): `rgb(${number}, ${number}, ${number})` => {
+  const validarEnteroEnRango = (nombre: string, valor: number, rangoMin: number, rangoMax: number) => {
+    if (!Number.isInteger(valor) || valor < rangoMin || valor > rangoMax) {
+      throw new Error(`${nombre} debe ser un número entero entre ${rangoMin} y ${rangoMax}. Se recibió ${valor}`);
+    }
+  };
 
+  validarEnteroEnRango("min", min, 0, 255);
+  validarEnteroEnRango("max", max, 0, 255);
+
+  if (min > max) {
+    throw new Error(`El valor mínimo debe ser menor o igual al máximo. Se recibió min: ${min}, max: ${max}`);
+  }
+
+  if (red != null) validarEnteroEnRango("red", red, 0, 255);
+  if (green != null) validarEnteroEnRango("green", green, 0, 255);
+  if (blue != null) validarEnteroEnRango("blue", blue, 0, 255);
+
+  const randomInt = () => Math.floor(Math.random() * (max - min + 1)) + min;
+  return `rgb(${red ?? randomInt()}, ${green ?? randomInt()}, ${blue ?? randomInt()})`;
+};
 
 const waitFor = (time: number): Promise<void> => {
     if (typeof time !== "number" || time < 0) throw new Error(`waitFor debe recibir un número positivo (en milisegundos). Se ha recibido ${JSON.stringify(time)} (${typeof time})`)

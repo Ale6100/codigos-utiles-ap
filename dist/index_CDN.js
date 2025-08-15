@@ -212,28 +212,44 @@ const crearObjeto = (claves, valores) => {
     if (claves.some(clave => typeof clave === "object"))
         throw new TypeError(`El primer parámetro de crearObjeto debe ser un array cuyos elementos no deben ser de tipo object`);
     const obj = {};
-    claves.forEach((clave, i) => obj[clave] = valores[i]);
+    claves.forEach((clave, i) => {
+        obj[clave] = valores[i];
+    });
     return obj;
 };
 const esObjetoLiteral = (param) => {
     return (typeof param === "object" && !Array.isArray(param) && param !== null);
 };
 const tieneLasPropiedadesObligatorias = (objeto, propiedadesObligatorias) => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesObligatorias) || propiedadesObligatorias.length === 0 || propiedadesObligatorias.some(prop => typeof prop !== "string" || !prop.trim()))
         throw new Error(`tieneLasPropiedadesObligatorias debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesObligatorias)} (${typeof propiedadesObligatorias})`);
-    return propiedadesObligatorias.every(prop => objeto.hasOwnProperty(prop));
+    return propiedadesObligatorias.every(prop => Object.hasOwn(objeto, prop));
 };
 const tieneSoloLasPropiedadesPermitidas = (objeto, propiedadesPermitidas) => {
-    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim()))
+    if (!esObjetoLiteral(objeto) || !Array.isArray(propiedadesPermitidas) || propiedadesPermitidas.length === 0 || propiedadesPermitidas.some(prop => typeof prop !== "string" || !prop.trim()))
         throw new Error(`tieneSoloLasPropiedadesPermitidas debe recibir un objeto literal y un array de strings no vacío. Se ha recibido ${JSON.stringify(objeto)} (${typeof objeto}) y ${JSON.stringify(propiedadesPermitidas)} (${typeof propiedadesPermitidas})`);
     return Object.keys(objeto).every(prop => propiedadesPermitidas.includes(prop));
 };
 //! ----- OTROS -----
-const colorRandom = () => {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
-    return `rgb(${red}, ${green}, ${blue})`;
+const colorRandom = ({ min = 0, max = 255, red, green, blue } = {}) => {
+    const validarEnteroEnRango = (nombre, valor, rangoMin, rangoMax) => {
+        if (!Number.isInteger(valor) || valor < rangoMin || valor > rangoMax) {
+            throw new Error(`${nombre} debe ser un número entero entre ${rangoMin} y ${rangoMax}. Se recibió ${valor}`);
+        }
+    };
+    validarEnteroEnRango("min", min, 0, 255);
+    validarEnteroEnRango("max", max, 0, 255);
+    if (min > max) {
+        throw new Error(`El valor mínimo debe ser menor o igual al máximo. Se recibió min: ${min}, max: ${max}`);
+    }
+    if (red != null)
+        validarEnteroEnRango("red", red, 0, 255);
+    if (green != null)
+        validarEnteroEnRango("green", green, 0, 255);
+    if (blue != null)
+        validarEnteroEnRango("blue", blue, 0, 255);
+    const randomInt = () => Math.floor(Math.random() * (max - min + 1)) + min;
+    return `rgb(${red ?? randomInt()}, ${green ?? randomInt()}, ${blue ?? randomInt()})`;
 };
 const waitFor = (time) => {
     if (typeof time !== "number" || time < 0)

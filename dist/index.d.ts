@@ -102,8 +102,8 @@ export declare const round: (n: number, m: number) => number;
 export declare const factorial: (n: number) => number;
 /**
  * Recibe un array y retorna un elemento al azar
- * @param {any[]} array Array del cual se quiere seleccionar un elemento al azar
- * @returns {any} Retorna un elemento al azar del array
+ * @param array Array del cual se quiere seleccionar un elemento al azar
+ * @returns Retorna un elemento al azar del array
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
@@ -111,11 +111,11 @@ export declare const factorial: (n: number) => number;
  * codigosap.elementoAlAzar([1, 'b', 3, 4]) // Puede retornar cualquiera de los elementos del array
  * codigosap.elementoAlAzar([]) // retorna `undefined`, ya que el array está vacío
  */
-export declare const elementoAlAzar: (array: any[]) => any;
+export declare const elementoAlAzar: <T>(array: T[]) => T | undefined;
 /**
  * Recibe un array y lo devuelve mezclado
- * @param {any[]} array Array que se pretende mezclar
- * @returns {any[]} Retorna el array mezclado
+ * @param array Array que se pretende mezclar
+ * @returns Retorna el array mezclado
  * @throws {TypeError} Si el argumento no es un array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
@@ -126,9 +126,9 @@ export declare const elementoAlAzar: (array: any[]) => any;
 export declare const mezclarArray: <T>(array: T[]) => T[];
 /**
  * Recibe un array y un número natural `n`. Devuelve `n` elementos al azar del array
- * @param {any[]} array Array del cual se quieren seleccionar los elementos
- * @param {number} n Cantidad de elementos del array que se quieren seleccionar
- * @returns {any[]} Retorna un array con `n` elementos seleccionados al azar del array de entrada
+ * @param array Array del cual se quieren seleccionar los elementos
+ * @param n Cantidad de elementos del array que se quieren seleccionar
+ * @returns Retorna un array con `n` elementos seleccionados al azar del array de entrada
  * @throws {Error} Si el primer argumento no es un array o el segundo argumento no es un número natural y menor o igual a la longitud del array
  * @example
  * import * as codigosap from "codigos-utiles-ap"
@@ -137,7 +137,7 @@ export declare const mezclarArray: <T>(array: T[]) => T[];
  * codigosap.obtenerNElementos(['a', 'b', 5], 1) // Puede retornar cualquier elemento del array
  * codigosap.obtenerNElementos([], 3) // Lanza un error, ya que el array está vacío y no se pueden seleccionar 3 elementos
  */
-export declare const obtenerNElementos: (array: any[], n: number) => any[];
+export declare const obtenerNElementos: <T>(array: T[], n: number) => T[];
 /**
  * Recibe tres números. El tercero es opcional pero debe ser positivo. Devuelve un array de números equiespaciados desde el origen hasta el final (sin incluir) solicitado, considerando el espaciado especificado
  * @param {number} origen Origen del array a retornar
@@ -273,23 +273,23 @@ export declare const esStringNumerico: (string: string) => boolean;
 export declare const unirStrings: (arrayAUnir: (string | null | undefined)[], nonValue: string) => string;
 /**
  * Recibe dos arrays `claves` y `valores`, retorna un objeto cuyas claves son los elementos de `claves` y los valores son los elementos de `valores`
- * @param {any[]} claves Array cuyos elementos serán las claves del objeto
- * @param {any[]} valores Array cuyos elementos serán los valores del objeto
+ * @param claves Array cuyos elementos serán las claves del objeto
+ * @param valores Array cuyos elementos serán los valores del objeto
  * @throws {TypeError} Si los parámetros no son arrays, o si el primer array contiene algún elemento de tipo object
  * @throws {Error} Si los parámetros no son arrays de igual longitud
  * @returns Retorna un objeto literal con las características mencionadas
  */
-export declare const crearObjeto: (claves: any[], valores: any[]) => Object;
+export declare const crearObjeto: <K extends string | number | symbol, V>(claves: K[], valores: V[]) => Record<K, V>;
 /**
  * Recibe un elemento de cualquier tipo. Devuelve true si es un objeto literal y false en caso contrario
- * @param {any} param Valor a analizar
+ * @param param Valor a analizar
  * @returns Retorna un valor booleano
  */
-export declare const esObjetoLiteral: (param: any) => boolean;
+export declare const esObjetoLiteral: (param: unknown) => param is Record<string | number | symbol, unknown>;
 /**
  * Recibe un objeto literal y un array de strings. Devuelve true si el objeto contiene todas las propiedades obligatorias especificadas en el array
- * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
+ * @param objeto Objeto literal a analizar
+ * @param propiedadesObligatorias Un array de strings que representa las propiedades obligatorias
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
@@ -299,13 +299,11 @@ export declare const esObjetoLiteral: (param: any) => boolean;
  * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com"}, ["email", "password"]) // Retorna false
  * codigosap.tieneLasPropiedadesObligatorias({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna true
  */
-export declare const tieneLasPropiedadesObligatorias: (objeto: {
-    [key: string]: any;
-}, propiedadesObligatorias: string[]) => boolean;
+export declare const tieneLasPropiedadesObligatorias: (objeto: unknown, propiedadesObligatorias: string[]) => objeto is Record<string, unknown>;
 /**
  * Recibe un objeto literal y un array de strings. Devuelve true si el objeto sólo contiene las propiedades permitidas especificadas en el array
- * @param {{[key: string]: any}} objeto Objeto literal a analizar
- * @param {string[]} propiedadesPermitidas Un array de strings que representa las propiedades permitidas
+ * @param objeto Objeto literal a analizar
+ * @param propiedadesPermitidas Un array de strings que representa las propiedades permitidas
  * @throws {Error} Si el primer parámetro no es un objeto literal o si el segundo parámetro no es una array de strings distinto de vacío
  * @returns {boolean}
  * @example
@@ -315,14 +313,24 @@ export declare const tieneLasPropiedadesObligatorias: (objeto: {
  * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com"}, ["email", "password"]) // Retorna true
  * codigosap.tieneSoloLasPropiedadesPermitidas({email: "asd@gmail.com", password: "asd", phone: 123123123}, ["email", "password"]) // Retorna false
  */
-export declare const tieneSoloLasPropiedadesPermitidas: (objeto: {
-    [key: string]: any;
-}, propiedadesPermitidas: string[]) => boolean;
+export declare const tieneSoloLasPropiedadesPermitidas: (objeto: unknown, propiedadesPermitidas: string[]) => objeto is Record<string, unknown>;
 /**
  * Retorna un color RGB al azar
- * @returns {`rgb(${number}, ${number}, ${number})`} Retorna un string con el formato "rgb(red, green, blue)" donde red, green y blue son números enteros entre 0 y 255
+ * @param {Object} options Opciones para generar el color
+ * @param {number} options.min Valor mínimo para los componentes RGB (por defecto 0)
+ * @param {number} options.max Valor máximo para los componentes RGB (por defecto 255)
+ * @param {number} options.red Valor fijo para el componente rojo, anula la generación aleatoria
+ * @param {number} options.green Valor fijo para el componente verde, anula la generación aleatoria
+ * @param {number} options.blue Valor fijo para el componente azul, anula la generación aleatoria
+ * @returns {`rgb(${number}, ${number}, ${number})`} String con formato "rgb(red, green, blue)" donde cada componente es un entero entre min y max
  */
-export declare const colorRandom: () => `rgb(${number}, ${number}, ${number})`;
+export declare const colorRandom: ({ min, max, red, green, blue }?: {
+    min?: number;
+    max?: number;
+    red?: number;
+    green?: number;
+    blue?: number;
+}) => `rgb(${number}, ${number}, ${number})`;
 /**
  * Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución
  * @param {number} time Tiempo de espera en milisegundos

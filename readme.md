@@ -118,7 +118,7 @@ Si lo prefieres, también tienes la opción de acceder al archivo principal [ind
 
 | Implementación | Descripción |
 | :--- | :--- |
-| `colorRandom()` | Retorna un color RGB al azar |
+| `colorRandom(config)` | Retorna un color RGB al azar |
 | `waitFor(time)` | Hace que tu código asincrónico espere un tiempo (en milisegundos) que le pases como parámetro antes de continuar la ejecución |
 | `colorBasadoEnString(string, max)` | Retorna un color RGB basado en un string de entrada |
 
